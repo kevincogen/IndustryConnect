@@ -1,13 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+// import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
+import { Auth0Provider } from '@auth0/auth0-react';
 import reportWebVitals from './reportWebVitals';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Auth0Provider
+        domain="industryconnect.us.auth0.com"
+        clientId="q6KnQ7ZqA97nC1E9p21CeM142x9EUDFD"
+        authorizationParams={{
+          redirect_uri: window.location.origin
+        }}
+      >
+        <App />
+    </Auth0Provider>
   </React.StrictMode>
 );
 
