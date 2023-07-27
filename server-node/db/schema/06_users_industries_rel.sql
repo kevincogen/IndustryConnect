@@ -1,4 +1,6 @@
-CREATE TABLE user_industries_rel (
+DROP TABLE IF EXISTS users_industries_rel CASCADE;
+
+CREATE TABLE users_industries_rel (
   id SERIAL PRIMARY KEY NOT NULL,
   user_id INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id),
