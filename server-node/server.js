@@ -3,6 +3,7 @@ require('dotenv').config();
 
 // Web server config
 const express = require('express');
+const cors = require('cors');
 const morgan = require('morgan');
 
 const PORT = process.env.PORT || 8080;
@@ -10,6 +11,7 @@ const app = express();
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 app.use(morgan('dev'));
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
