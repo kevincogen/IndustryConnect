@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './index.css';
 import App from './App';
 import { Auth0Provider } from '@auth0/auth0-react';
@@ -17,7 +17,7 @@ root.render(
           redirect_uri: window.location.origin
         }}
       >
-        <App />
+          <App />
     </Auth0Provider>
   </React.StrictMode>
 );

@@ -1,18 +1,14 @@
 import './App.css';
-import LoginButton from './components/buttons/login-button';
-import LogoutButton from './components/buttons/logout-button';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Profile from './components/pages/profile';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        IndustryConnect Skeleton
-        <LoginButton />
-        <LogoutButton />
-        <Profile />
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Profile/>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
