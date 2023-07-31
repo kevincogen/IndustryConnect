@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import ProfileForm from "./ProfileForm";
 
-const CreateProfile = () => {
+const CreateProfile = ({ setUserProfile }) => {
   const { user } = useAuth0();
 
   const initialValues = {
@@ -34,6 +34,7 @@ const CreateProfile = () => {
       if (response.ok) {
         const newUser = await response.json();
         console.log("User registered successfully:", newUser);
+        setUserProfile(newUser);
       } else {
         const errorData = await response.json();
         console.error("Error registering user:", errorData.error);
