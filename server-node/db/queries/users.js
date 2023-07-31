@@ -8,30 +8,6 @@ const getUsers = () => {
     });
 };
 
-// const registerUser = async (userData) => {
-//   try {
-//     const { first_name, last_name, email, user_id } = userData;
-//     const values = [first_name, last_name, email, user_id];
-
-//      const query = {
-//       text: `
-//         INSERT INTO users
-//           (first_name, last_name, email, authentication_id)
-//         VALUES
-//           ($1, $2, $3, $4)
-//         RETURNING *
-//       `,
-//       values,
-//     };
-
-//     const result = await pool.query(query);
-//     const newUser = result.rows[0];
-//     return newUser;
-//   } catch (err) {
-//     console.error('Error registering user:', err);
-//     throw new Error('Internal Server Error');
-//   }
-// };
 
 const createUserProfile = async (userData) => {
   try {
@@ -64,7 +40,31 @@ const createUserProfile = async (userData) => {
   }
 };
 
-module.exports = { getUsers, createUserProfile };
+
+const getUserProfileByAuthenticationId = async (authenticationId) => {
+  try {
+    const query = {
+      text: 'SELECT * FROM users WHERE authentication_id = $1',
+      values: [authenticationId],
+    };
+    const { rows } = await db.query(query);
+    return rows[0];
+  } catch (error) {
+    throw new Error('Error fetching user profile from database:', error);
+  }
+};
+
+module.exports = {
+  // Other query functions...
+  getUserProfileByAuthenticationId,
+};
+
+
+module.exports = {
+  getUsers,
+  createUserProfile,
+  getUserProfileByAuthenticationId,
+ };
 
 
 
