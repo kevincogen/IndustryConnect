@@ -20,12 +20,14 @@ const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
 const profilesRoutes = require('./routes/profiles'); // Require the profiles routes
+const industriesRoutes = require('.routes/industries');
 
 // Mount all resource routes
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/api/profiles', profilesRoutes); // Mount the profiles routes
+app.use('/api/industries', industriesRoutes);
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

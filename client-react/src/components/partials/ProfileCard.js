@@ -1,4 +1,6 @@
 import { Card, CardContent, CardMedia, Button, Typography, CardActions } from '@mui/material';
+import ConnectButton from '../buttons/connect-button';
+import PassButton from '../buttons/pass-button';
 
 function ProfileCard({ profile }) {
   return (
@@ -30,6 +32,8 @@ function ProfileCard({ profile }) {
           GitHub
         </Button>
       </CardActions>
+      <ConnectButton />
+      <PassButton />
     </Card>
   );
 }
