@@ -63,9 +63,11 @@ const Connect = () => {
       <NetworkButton onClick={filterProfilesByIndustry}>
         Network
       </NetworkButton>
-      {profiles.map((profile, index) => 
-        <ProfileCard key={index} profile={profile} />
-      )}
+      <div className="profile-grid">
+        {profiles.map((profile, index) => 
+          <ProfileCard key={index} profile={profile} />
+        )}
+      </div>  
     </div>
   );
 };
