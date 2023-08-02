@@ -4,7 +4,7 @@ import PassButton from '../buttons/pass-button.js';
 import TinderCard from 'react-tinder-card'
 
 
-function ProfileCard({ profile }) {
+function ProfileCard({ profile, connection }) {
   const onSwipe = (direction) => {
     console.log(`you swiped: ${direction}`)
   };
@@ -45,7 +45,7 @@ function ProfileCard({ profile }) {
             GitHub
           </Button>
         </CardActions>
-        <ConnectButton />
+        <ConnectButton onClick={() => connection.handleConnect(profile.id)} />
         <PassButton />
       </Card>
     </TinderCard>

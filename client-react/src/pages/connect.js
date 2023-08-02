@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import ProfileCard from '../partials/ProfileCard';
+import ProfileCard from '../components/partials/ProfileCard';
 import { useAuth0 } from "@auth0/auth0-react";
-import Navbar from "../partials/navbar"
-import SearchBar from '../partials/searchbar';
-import NetworkButton from '../buttons/network-button';
+import Navbar from "../components/partials/navbar"
+import SearchBar from '../components/partials/searchbar';
+import NetworkButton from '../components/buttons/network-button';
+import useConnection from '../hooks/useConnections';
+
 
 const Connect = () => {
   const [profiles, setProfiles] = useState([]);
   const [industries, setIndustries] = useState([]);
   const [selectedIndustries, setSelectedIndustries] = useState([]);
-  //auth token
   const { user, isLoading } = useAuth0();
+  const connection = useConnection();
 
 
   useEffect(() => {   
@@ -65,7 +67,7 @@ const Connect = () => {
       </NetworkButton>
       <div className="profile-grid">
         {profiles.map((profile, index) => 
-          <ProfileCard key={index} profile={profile} />
+          <ProfileCard key={index} profile={profile} connection={connection} />
         )}
       </div>  
     </div>
