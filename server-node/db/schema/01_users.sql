@@ -16,6 +16,9 @@ CREATE TABLE users (
   github VARCHAR(255),
   facebook VARCHAR(255),
   website VARCHAR(255),
+  industry VARCHAR(255),
+  connections INTEGER[],
+  passes INTEGER[],
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );

@@ -5,6 +5,8 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
 import { autocompleteClasses } from '@mui/material/Autocomplete';
+import { useEffect } from 'react';
+
 
 const Root = styled('div')(({ theme }) => ({
   color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.65)' : 'rgba(0,0,0,.85)',
@@ -129,7 +131,8 @@ const Listbox = styled('ul')(({ theme }) => ({
   },
 }));
 
-export default function SearchBar({ options, defaultValue }) {
+
+export default function SearchBar({ options, defaultValue, onChange }) {
   const {
     getRootProps,
     getInputLabelProps,
@@ -141,17 +144,23 @@ export default function SearchBar({ options, defaultValue }) {
     value,
     focused,
     setAnchorEl,
+    setValue,
   } = useAutocomplete({
-    id: 'customized-hook-demo',
+    id: 'SearchBar',
     defaultValue: defaultValue,
     multiple: true,
     options: options,
   });
 
+  //notify parent component the value changed
+  useEffect(() => {
+    onChange(value);
+  }, [value, onChange]);
+
   return (
     <Root>
       <div {...getRootProps()}>
-        <Label {...getInputLabelProps()}>Customized hook</Label>
+        <Label {...getInputLabelProps()}>Industry Lookup</Label>
         <InputWrapper ref={setAnchorEl} className={focused ? 'focused' : ''}>
           {value.map((option, index) => (
             <StyledTag label={option} {...getTagProps({ index })} />

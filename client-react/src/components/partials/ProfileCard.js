@@ -1,6 +1,6 @@
 import { Card, CardContent, CardMedia, Button, Typography, CardActions } from '@mui/material';
 import ConnectButton from '../buttons/connect-button';
-import PassButton from '../buttons/pass-button';
+import PassButton from '../buttons/pass-button.js';
 
 function ProfileCard({ profile }) {
   return (
@@ -22,6 +22,9 @@ function ProfileCard({ profile }) {
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Experience: {profile.experience}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Industry: {profile.industry}
         </Typography>
       </CardContent>
       <CardActions>
