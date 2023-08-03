@@ -44,19 +44,55 @@ const createUserProfile = async (userData) => {
 const getUserProfileByAuthenticationId = async (authenticationId) => {
   try {
     const query = {
-      text: 'SELECT * FROM users WHERE authentication_id = $1',
+      // select everything fromt the user object except the update_at
+      text: 'SELECT first_name, last_name, email, bio, education, experience, linkedin, twitter, github, facebook, website, authentication_id, created_at FROM users WHERE authentication_id = $1',
       values: [authenticationId],
     };
     const { rows } = await db.query(query);
+    console.log("this is rows", rows)
     return rows[0];
   } catch (error) {
     throw new Error('Error fetching user profile from database:', error);
   }
 };
 
-module.exports = {
-  // Other query functions...
-  getUserProfileByAuthenticationId,
+// update user profile
+
+const updateUserProfile = async (userData) => {
+  try {
+    console.log("this is userData", userData)
+    const { first_name, last_name, email, authentication_id, created_at, ...fieldsToUpdate } = userData;
+    const fieldNames = ['first_name', 'last_name', 'email', 'authentication_id'];
+    const values = [first_name, last_name, email, authentication_id];
+
+    for (const fieldName in fieldsToUpdate) {
+      fieldNames.push(fieldName);
+      values.push(fieldsToUpdate[fieldName]);
+    }
+    console.log("this is fieldNames", fieldNames)
+
+    const updateColumns = fieldNames.map((fieldName, index) => `${fieldName} = $${index + 1}`).join(', ');
+
+    const query = {
+      text: `
+        UPDATE users
+        SET ${updateColumns}
+        WHERE authentication_id = $4
+        RETURNING *
+      `,
+      values,
+    };
+
+    console.log("this is query", query)
+    const { rows } = await db.query(query);
+
+    console.log("this is rows", rows)
+    return rows;
+
+  } catch (err) {
+    console.error('Error updating user profile:', err);
+    throw new Error('Internal Server Error');
+  }
 };
 
 
@@ -64,6 +100,7 @@ module.exports = {
   getUsers,
   createUserProfile,
   getUserProfileByAuthenticationId,
+  updateUserProfile,
  };
 
 
