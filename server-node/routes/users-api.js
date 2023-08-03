@@ -16,6 +16,7 @@ router.get('/profile', async (req, res) => {
   try {
     const userProfile = await userQueries.getUserProfileByAuthenticationId(authentication_id);
     if (userProfile) {
+      console.log(userProfile);
       res.json(userProfile);
     } else {
       res.status(404).json({ error: 'User not found' });
@@ -41,7 +42,25 @@ router.post('/register', async (req, res) => {
     const newUser = await userQueries.createUserProfile(req.body);
     res.status(201).json(newUser);
   } catch (err) {
-    console.error('Error registering user:', err);
+    console.error('Error registering user -- From route:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+//update user profile
+router.put('/update', async (req, res) => {
+  const { first_name, last_name, email, authentication_id, bio, education, experience, linkedin, twitter, github, facebook, website } = req.body;
+
+  // Check if required fields are present
+  if (!first_name || !last_name || !email || !authentication_id) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  try {
+    const updatedUser = await userQueries.updateUserProfile(req.body);
+    res.status(201).json(updatedUser);
+  } catch (err) {
+    console.error('Error updating user profile:', err);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
