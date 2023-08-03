@@ -1,210 +1,307 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import LoginButton from "../buttons/login-button";
-import LogoutButton from "../buttons/logout-button";
-// import EditProfile from "../forms/EditProfile"; // Import the EditProfile component
-import CreateProfile from "../forms/CreateProfile"; // Import the CreateProfile component
+import { createProfile, updateProfile, getProfile } from "./profie-api";
 
+import {
+  TextField,
+  Avatar,
+  CssBaseline,
+  Typography,
+  Container,
+  Grid,
+  Button,
+} from "@mui/material";
 
 const Profile = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
-  const [userProfile, setUserProfile] = useState(null);
-  const [authenticated, setAuthenticated] = useState(isAuthenticated);
+  const { user, isLoading, logout } = useAuth0();
 
-  const fetchUserProfile = useCallback(async () => {
-    if (user && user?.authentication_id) {
-      try {
-        const response = await fetch(`/api/users/profile?authentication_id=${user.authentication_id}`);
-        if (response.ok) {
-          const userData = await response.json();
-          setUserProfile(userData);
-        } else {
-          console.error("Error fetching user profile:", response.statusText);
+  const [userProfile, setUserProfile] = useState({
+    // Initialize the userProfile with default values
+    first_name: "",
+    last_name: "",
+    email: "",
+    authentication_id: "",
+    profile_picture: "",
+    bio: "",
+    education: "",
+    experience: "",
+    linkedin: "",
+    twitter: "",
+    github: "",
+    facebook: "",
+    website: "",
+  });
+
+  // Separate state for form data
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    bio: "",
+    education: "",
+    experience: "",
+    linkedin: "",
+    twitter: "",
+    github: "",
+    facebook: "",
+    website: "",
+  });
+
+  useEffect(() => {
+    if (!isLoading && user) {
+      const fetchUserProfile = async () => {
+        try {
+          // Fetch user profile from API
+          const userProfileData = await getProfile(user.sub);
+          // Fetch user info from the endpoint
+          const userInfoResponse = await fetch(
+            `/api/users/profile?authentication_id=${user.sub}`
+          );
+          const userInfo = await userInfoResponse.json();
+
+          // Merge user profile and user info data
+          const mergedUserProfile = {
+            ...userProfileData,
+            ...userInfo,
+            first_name: user.given_name || "",
+            last_name: user.family_name || "",
+            email: user.email || "",
+            authentication_id: user.sub || "",
+            profile_picture: user.picture || "",
+          };
+
+          setUserProfile(mergedUserProfile);
+          setFormData(mergedUserProfile); // Initialize form data with user profile data
+        } catch (error) {
+          console.error("Error fetching user profile:", error);
         }
-      } catch (error) {
-        console.error("Error fetching user profile:", error.message);
-      }
-    }
-  }, [user]);
+      };
 
-  useEffect(() => {
-    if (isAuthenticated !== authenticated) {
-      setAuthenticated(isAuthenticated);
-    }
-  }, [isAuthenticated, authenticated]);
-
-
-  useEffect(() => {
-    console.log("isAuthenticated:", isAuthenticated);
-    console.log("user:", user);
-
-    if (isAuthenticated && user) {
-      console.log("user:", user);
       fetchUserProfile();
     }
-  }, [isAuthenticated, user, fetchUserProfile]);
+  }, [isLoading, user]);
 
-  if (isLoading) {
-    return <div>Loading ...</div>;
-  }
+  // Handle form field changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
 
-  const renderUserProfile = () => {
-    if (!isAuthenticated) {
-      // If the user is not authenticated, show the Login button
-      return <LoginButton />;
-    } else if (isAuthenticated && !user?.authentication_id) {
-      // If the user is authenticated but not registered, show the CreateProfile form
-      return <CreateProfile setUserProfile={setUserProfile} />;
-    } else if (isAuthenticated && user?.authentication_id && userProfile) {
-      // If the user is authenticated, has an authentication_id, and the userProfile is available, display the profile
-      return (
-        <div>
-          <img src={user.picture} alt={user.name} />
-          <h2>{user.name}</h2>
-          <p>{user.email}</p>
-          {/* Render the user profile fields here */}
-          <p>Bio: {userProfile.bio}</p>
-          <p>Education: {userProfile.education}</p>
-          {/* Add other user profile fields as needed */}
-          <button>Edit Profile</button>
-          <LogoutButton />
-        </div>
-      );
-    } else {
-      // If the user is authenticated but userProfile is not available yet, show a loading message
-      return <div>Loading user profile...</div>;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const values = {
+      first_name: formData.first_name,
+      last_name: formData.last_name,
+      email: formData.email,
+      profile_picture: formData.profile_picture,
+      bio: formData.bio,
+      education: formData.education,
+      experience: formData.experience,
+      linkedin: formData.linkedin,
+      github: formData.github,
+      facebook: formData.facebook,
+      website: formData.website,
+    };
+
+    if (userProfile.authentication_id && !userProfile.created_at) {
+      // New profile is being created
+      const newUserProfile = await createProfile({
+        ...values,
+        authentication_id: userProfile.authentication_id,
+      });
+      if (newUserProfile) {
+        setUserProfile(newUserProfile);
+        setFormData(newUserProfile); // Update form data with new user profile
+      }
+    } else if (userProfile.created_at) {
+      // Profile is being updated
+      const updatedUserProfile = await updateProfile({
+        ...values,
+        authentication_id: userProfile.authentication_id,
+      });
+      if (updatedUserProfile) {
+        setUserProfile(updatedUserProfile);
+        setFormData(updatedUserProfile); // Update form data with updated user profile
+      }
     }
   };
 
   return (
-    <div>
-      {renderUserProfile()}
-    </div>
+    <Container component="main" maxWidth="xs" direction="column">
+      <CssBaseline />
+      <div>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <Avatar value={userProfile.profile_picture}></Avatar>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography component="h1" variant="h5" name={user?.name}>
+              {user?.name}
+            </Typography>
+          </Grid>
+        </Grid>
+
+        <form onSubmit={handleSubmit} noValidate>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name="first_name"
+                variant="standard"
+                required
+                id="firstName"
+                helperText="First Name"
+                placeholder={userProfile.first_name || "First Name"}
+                value={formData.first_name}
+                onChange={handleChange}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="standard"
+                required
+                id="lastName"
+                helperText="Last Name"
+                name="last_name"
+                placeholder={userProfile.last_name || "Last Name"}
+                value={formData.last_name}
+                onChange={handleChange}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                multiline
+                variant="standard"
+                name="bio"
+                helperText="Please write a short bio describing yourself to potential connections"
+                type="text"
+                id="bio"
+                placeholder={userProfile.bio || "Short Bio"}
+                value={formData.bio}
+                onChange={handleChange}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                variant="standard"
+                required
+                id="email"
+                helperText="Email Address"
+                name="email"
+                placeholder={userProfile.email || "Email Address"}
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                variant="standard"
+                name="experience"
+                helperText="Professional Title"
+                type="text"
+                id="experience"
+                placeholder={userProfile.experience || "Professional Title"}
+                value={formData.experience}
+                onChange={handleChange}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                variant="standard"
+                name="education"
+                helperText="Education"
+                type="text"
+                id="education"
+                placeholder={userProfile.education || "Education"}
+                value={formData.education}
+                onChange={handleChange}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                variant="standard"
+                name="linkedin"
+                helperText="Linkedin URL"
+                type="text"
+                id="Linkedin"
+                placeholder={userProfile.linkedin || "Linkedin URL"}
+                value={formData.linkedin}
+                onChange={handleChange}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                variant="standard"
+                name="github"
+                helperText="Github URL"
+                type="text"
+                id="Linkedin"
+                placeholder={userProfile.github || "Github URL"}
+                value={formData.github}
+                onChange={handleChange}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                variant="standard"
+                name="facebook"
+                helperText="Facebook URL"
+                type="text"
+                id="Facebook"
+                placeholder={userProfile.facebook || "Facebook URL"}
+                value={formData.facebook}
+                onChange={handleChange}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                variant="standard"
+                name="website"
+                helperText="Website URL"
+                type="text"
+                id="Website"
+                placeholder={userProfile.website || "Website URL"}
+                value={formData.website}
+                onChange={handleChange}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <Button type="submit" variant="contained" color="primary">
+                Save
+              </Button>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Button
+                onClick={() =>
+                  logout({ logoutParams: { returnTo: window.location.origin } })
+                }
+              >
+                Logout
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+    </Container>
   );
 };
 
 export default Profile;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const Profile = () => {
-//   const { user, isAuthenticated, isLoading } = useAuth0();
-//   const [userProfile, setUserProfile] = useState(null);
-
-//   const fetchUserProfile = useCallback(async () => {
-//     if (user && user?.authentication_id) {
-//       try {
-//         console.log("user:", user);
-//         const response = await fetch(`/api/users/profile?authentication_id=${user.authentication_id}`);
-//         if (response.ok) {
-//           const userData = await response.json();
-//           console.log("userData:", userData);
-//           setUserProfile(userData);
-//         } else {
-//           console.error("Error fetching user profile:", response.statusText);
-//         }
-//       } catch (error) {
-//         console.error("Error fetching user profile:", error.message);
-//       }
-//     }
-//   }, [user]);
-
-//   useEffect(() => {
-//     if (isAuthenticated && user) {
-//       fetchUserProfile();
-//     }
-//   }, [isAuthenticated, user, fetchUserProfile]);
-
-//   if (isLoading) {
-//     return <div>Loading ...</div>;
-//   }
-
-//   const renderUserProfile = () => {
-//     if (isLoading) {
-//       // If the userProfile is not yet fetched, display a loading message
-//       return <div>Loading user profile...</div>;
-//     } else if (isAuthenticated && user?.authentication_id) {
-//       // If the user is authenticated and has an authentication_id, fetch the user profile
-//       if (!userProfile) {
-//         // If the userProfile is null after loading is complete, show the "Loading user profile" message
-//         return <div>Loading user profile...</div>;
-//       } else {
-//         // If the userProfile is fetched, display the profile
-//         return (
-//           <div>
-//             <img src={user.picture} alt={user.name} />
-//             <h2>{user.name}</h2>
-//             <p>{user.email}</p>
-//             {/* Render the user profile fields here */}
-//             <p>Bio: {userProfile.bio}</p>
-//             <p>Education: {userProfile.education}</p>
-//             {/* Add other user profile fields as needed */}
-//             <button>Edit Profile</button>
-//             <LogoutButton />
-//           </div>
-//         );
-//       }
-//     } else {
-//       // If the user is not authenticated or doesn't have an authentication_id, show the CreateProfile form
-//       return <CreateProfile setUserProfile={setUserProfile} />;
-//     }
-//   };
-// };
-
-//   // Render the user profile fields if the user is authenticated and has a truthy user.authentication_id
-// //   const renderUserProfile = () => {
-// //     if (!userProfile) {
-// //       // If the userProfile is not yet fetched, display a loading message or return null
-// //       return <div>Loading user profile...</div>;
-// //     } else if (userProfile.created_at) {
-// //       // If the userProfile is fetched, display the profile
-// //       return (
-// //         <div>
-// //           <img src={user.picture} alt={user.name} />
-// //           <h2>{user.name}</h2>
-// //           <p>{user.email}</p>
-// //           {/* Render the user profile fields here */}
-// //           <p>Bio: {userProfile.bio}</p>
-// //           <p>Education: {userProfile.education}</p>
-// //           {/* Add other user profile fields as needed */}
-// //           <button>Edit Profile</button>
-// //           <LogoutButton />
-// //         </div>
-// //       );
-// //     } else if (isAuthenticated && !user?.authentication_id) {
-// //       // If the user is authenticated but not registered, show the CreateProfile form
-// //       return <CreateProfile setUserProfile={setUserProfile}/>;
-// //     } else {
-// //       // If the user is not authenticated, show the Login button
-// //       return (
-// //         <div className="Register or Login">
-// //           <LoginButton />
-// //         </div>
-// //       );
-// //     }
-// //   };
-
-// //   return (
-// //     <div>
-// //       {renderUserProfile()}
-// //     </div>
-// //   );
-// // };
-
-// export default Profile;
