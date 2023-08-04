@@ -5,6 +5,7 @@ import Navbar from "../components/partials/navbar"
 import SearchBar from '../components/partials/searchbar';
 import NetworkButton from '../components/buttons/network-button';
 import useConnection from '../hooks/useConnections';
+import useGetCurrentUser from '../hooks/useGetCurrentUser';
 
 
 const Connect = () => {
@@ -13,6 +14,7 @@ const Connect = () => {
   const [selectedIndustries, setSelectedIndustries] = useState([]);
   const { user, isLoading } = useAuth0();
   const connection = useConnection();
+  const currentUser = useGetCurrentUser();
 
 
   useEffect(() => {   
@@ -32,7 +34,6 @@ const Connect = () => {
     }
 
     if (selectedIndustries.length === 0) {
-      console.log(sub)
       fetch('http://localhost:8080/api/profiles', {
         headers: {
           'X-Auth0-Sub': sub
@@ -41,7 +42,6 @@ const Connect = () => {
       .then(response => response.json())
       .then(data => setProfiles(data))
     } else {
-      console.log(sub)
       const industryQuery = selectedIndustries.join('.');
       // Encode the string to make it URL-safe
       fetch(`http://localhost:8080/api/profiles-by-industries/${industryQuery}`, {
@@ -67,7 +67,7 @@ const Connect = () => {
       </NetworkButton>
       <div className="profile-grid">
         {profiles.map((profile, index) => 
-          <ProfileCard key={index} profile={profile} connection={connection} />
+          <ProfileCard key={index} profile={profile} connection={connection} currentUser={currentUser} />
         )}
       </div>  
     </div>
