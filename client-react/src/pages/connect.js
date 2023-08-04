@@ -6,6 +6,9 @@ import SearchBar from '../components/partials/searchbar';
 import NetworkButton from '../components/buttons/network-button';
 import useConnection from '../hooks/useConnections';
 import useGetCurrentUser from '../hooks/useGetCurrentUser';
+import ProfileCarousel from '../components/partials/ProfileCarousel';
+import ProfileGrid from '../components/partials/ProfileGrid';
+import Sidebar from '../components/partials/ConnectSideBar';
 
 
 const Connect = () => {
@@ -14,8 +17,13 @@ const Connect = () => {
   const [selectedIndustries, setSelectedIndustries] = useState([]);
   const { user, isLoading } = useAuth0();
   const connection = useConnection();
-  const currentUser = useGetCurrentUser();
-
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [firstSub, setFirstSub] = useState(0)
+  const [currentUser, userLoad ] = useGetCurrentUser(refreshKey, firstSub);
+  const handleRefresh = () => {
+    setFirstSub(currentUser[0].authentication_id)
+    setRefreshKey(refreshKey + 1);
+  };
 
   useEffect(() => {   
     fetch('http://localhost:8080/api/industries')
@@ -53,7 +61,21 @@ const Connect = () => {
         .then(data => setProfiles(data))
     }
   };
-  
+
+  // Modified connect and pass handlers to include refreshing the current user
+  const handleConnectWrapper = (profile) => {
+    connection.handleConnect(profile, currentUser);
+    handleRefresh(); // Call the handleRefresh function to re-fetch the current user
+  };
+
+  const handlePassWrapper = (profile) => {
+    connection.handlePass(profile);
+    handleRefresh(); // Call the handleRefresh function to re-fetch the current user
+  };
+  console.log(currentUser)
+  if (currentUser === null) {
+    return <div>Loading...</div>;
+  }
   return (
     <div>
       <Navbar />
@@ -62,14 +84,15 @@ const Connect = () => {
         value={selectedIndustries}
         onChange={(newValue) => setSelectedIndustries(newValue)}
       />
-      <NetworkButton onClick={filterProfilesByIndustry}>
-        Network
-      </NetworkButton>
-      <div className="profile-grid">
-        {profiles.map((profile, index) => 
-          <ProfileCard key={index} profile={profile} connection={connection} currentUser={currentUser} />
-        )}
-      </div>  
+      <NetworkButton onClick={filterProfilesByIndustry}>Network</NetworkButton>
+      <ProfileCarousel profiles={profiles} connection={{ handleConnect: handleConnectWrapper, handlePass: handlePassWrapper }} currentUser={currentUser[0]} />
+      <ProfileGrid profiles={profiles} connection={{ handleConnect: handleConnectWrapper, handlePass: handlePassWrapper }} currentUser={currentUser} />
+      <Sidebar
+        currentUser={currentUser[0]}
+        connectHistory={currentUser[0].connections}
+        passHistory={currentUser[0].passes}
+        profiles={profiles}
+      />
     </div>
   );
 };

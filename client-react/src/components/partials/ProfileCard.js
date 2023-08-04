@@ -11,13 +11,17 @@ function ProfileCard({ profile, connection, currentUser }) {
   const onCardLeftScreen = (myIdentifier) => {
     console.log(`${myIdentifier} left the screen`)
   }
-
+  // Check if profile or necessary keys are undefined or null
+  if (!profile || !profile.first_name || !profile.last_name) {
+    // You can render a placeholder or return null
+    return <div>Profile not available</div>;
+  }
   return (
     <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')} preventSwipe={['right', 'left']}>
       <Card sx={{ maxWidth: 345 }}>
         <CardMedia
           sx={{ height: 140 }}
-          image={profile.profile_picture}
+          image={profile.profile_picture || "default-image.jpg"} // Fallback image if undefined
           title="Profile Picture"
         />
         <CardContent>
@@ -46,7 +50,7 @@ function ProfileCard({ profile, connection, currentUser }) {
           </Button>
         </CardActions>
         <ConnectButton onClick={() => connection.handleConnect(profile, currentUser)} />
-        <PassButton />
+        <PassButton onClick={() => connection.handlePass(profile)} />
       </Card>
     </TinderCard>
   );
