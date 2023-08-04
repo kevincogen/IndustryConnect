@@ -102,6 +102,7 @@ const Profile = () => {
       education: formData.education,
       experience: formData.experience,
       linkedin: formData.linkedin,
+      twitter: formData.twitter,
       github: formData.github,
       facebook: formData.facebook,
       website: formData.website,
@@ -235,6 +236,19 @@ const Profile = () => {
                 id="Linkedin"
                 placeholder={userProfile.linkedin || "Linkedin URL"}
                 value={formData.linkedin}
+                onChange={handleChange}
+              />
+            </Grid>
+            
+            <Grid item xs={12}>
+              <TextField
+                variant="standard"
+                name="twitter"
+                helperText="Twitter URL"
+                type="text"
+                id="Twitter"
+                placeholder={userProfile.twitter || "Twitter Handle"}
+                value={formData.twitter}
                 onChange={handleChange}
               />
             </Grid>
