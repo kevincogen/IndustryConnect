@@ -5,6 +5,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const cors = require('cors');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -15,6 +16,9 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(express.json());
+
+app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
 
 // Separated Routes for each Resource
 const userApiRoutes = require('./routes/users-api');
@@ -37,6 +41,14 @@ app.use('/api/profiles-by-industries', profilesByIndustriesRoutes);
 app.use('/api/connect', connectRoutes);
 app.use('/api/pass', passRoutes);
 app.use('/api/match', matchRoutes);
+
+
+
+const corsOptions = {
+  origin: 'http://localhost:3000',
+};
+
+app.use(cors(corsOptions));
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
