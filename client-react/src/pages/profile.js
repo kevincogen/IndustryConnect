@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { createProfile, updateProfile, getProfile } from "./profie-api";
+import LoginButton from "../components/buttons/login-button";
 
 import {
   TextField,
@@ -32,6 +33,7 @@ const Profile = () => {
     github: "",
     facebook: "",
     website: "",
+    industry: "",
   });
 
   // Separate state for form data
@@ -47,6 +49,7 @@ const Profile = () => {
     github: "",
     facebook: "",
     website: "",
+    industry: "",
   });
 
   useEffect(() => {
@@ -108,6 +111,7 @@ const Profile = () => {
       github: formData.github,
       facebook: formData.facebook,
       website: formData.website,
+      industry: formData.industry,
     };
 
     try {
@@ -139,8 +143,10 @@ const Profile = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs" direction="column">
+      <>
       <Navbar />
+      <LoginButton />
+    <Container component="main" maxWidth="xs" direction="column">
       <CssBaseline />
       <div>
         <Grid container spacing={2}>
@@ -205,6 +211,19 @@ const Profile = () => {
                 name="email"
                 placeholder={userProfile.email || "Email Address"}
                 value={formData.email}
+                onChange={handleChange}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                variant="standard"
+                name="industry"
+                helperText="Industry"
+                type="text"
+                id="industry"
+                placeholder={userProfile.industry || "Industry"}
+                value={formData.industry}
                 onChange={handleChange}
               />
             </Grid>
@@ -327,6 +346,7 @@ const Profile = () => {
     
     </div>  
     </Container>
+    </>
   );
 };
 
