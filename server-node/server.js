@@ -9,6 +9,17 @@ const morgan = require('morgan');
 const PORT = process.env.PORT || 8080;
 const app = express();
 
+// socket.io config
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server, {
+  cors: {
+      origin: "http://localhost:3000"
+  }
+});
+
+
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 app.use(morgan('dev'));
 app.use(cors());
@@ -43,12 +54,20 @@ app.use('/api/match', matchRoutes);
 
 
 
-const corsOptions = {
-  origin: 'http://localhost:3000',
-};
+// const corsOptions = {
+//   origin: 'http://localhost:3000',
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
-app.listen(PORT, () => {
+
+// socket.io
+io.on('connection', (socket) => {
+  console.log('a user connected');
+
+});
+
+server.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+
