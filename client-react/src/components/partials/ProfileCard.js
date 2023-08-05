@@ -2,6 +2,7 @@ import { Card, CardContent, CardMedia, Button, Typography, CardActions } from '@
 import ConnectButton from '../buttons/connect-button';
 import PassButton from '../buttons/pass-button.js';
 import TinderCard from 'react-tinder-card'
+import Rating from '@mui/material/Rating';
 
 
 function ProfileCard({ profile, connection, currentUser }) {
@@ -40,6 +41,10 @@ function ProfileCard({ profile, connection, currentUser }) {
           <Typography variant="body2" color="text.secondary">
             Industry: {profile.industry}
           </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Rating:
+          </Typography>
+          <Rating name="half-rating-read" defaultValue={profile.average_rating} precision={0.5} readOnly size="small" />
         </CardContent>
         <CardActions>
           <Button size="small" href={profile.linkedin} target="_blank">

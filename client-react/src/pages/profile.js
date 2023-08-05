@@ -143,9 +143,6 @@ const Profile = () => {
   };
 
   return (
-      <>
-      <Navbar />
-      <LoginButton />
     <Container component="main" maxWidth="xs" direction="column">
       <CssBaseline />
       <div>
@@ -346,7 +343,6 @@ const Profile = () => {
     
     </div>  
     </Container>
-    </>
   );
 };
 

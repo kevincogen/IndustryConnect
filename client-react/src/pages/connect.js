@@ -76,6 +76,7 @@ const Connect = () => {
   if (currentUser === null) {
     return <div>Loading...</div>;
   }
+  console.log(profiles)
   return (
     <div>
       <Navbar />
