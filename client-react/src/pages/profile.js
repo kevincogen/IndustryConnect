@@ -144,8 +144,6 @@ const Profile = () => {
 
   return (
     <Container component="main" maxWidth="xs" direction="column">
-      <Navbar />
-      <LoginButton />
       <CssBaseline />
       <div>
         <Grid container spacing={2}>
