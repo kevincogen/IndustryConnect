@@ -65,6 +65,13 @@ app.use('/api/match', matchRoutes);
 io.on('connection', (socket) => {
   console.log('a user connected');
 
+  socket.emit('system', 'Welcome to the chat!');
+
+  socket.on('disconnect', () => {
+      console.log('user disconnected');
+  }
+  );
+
 });
 
 server.listen(PORT, () => {
