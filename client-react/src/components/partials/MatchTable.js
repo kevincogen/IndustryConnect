@@ -5,10 +5,26 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import axios from 'axios';
+import Rating from '@mui/material/Rating';
+import Typography from '@mui/material/Typography';
+
 
 export default function MatchList({currentUser}) {
   const [matches, setMatches] = useState([]);
   const currentUserId = currentUser.id;
+  const updateRating = async (ratedUserId, newValue) => {
+    console.log("ratedUserId: ", ratedUserId);
+    console.log("currentUserId: ", currentUserId);
+    console.log("newValue: ", newValue);
+    try {
+      await axios.put(`http://localhost:8080/api/matchRating/${ratedUserId}`, {
+        raterId: currentUserId,
+        rating: newValue
+      });
+    } catch (error) {
+      console.error("There was an error updating the rating: ", error);
+    }
+  };
 
   useEffect(() => {
     const getMatchList = async () => {
@@ -31,6 +47,15 @@ export default function MatchList({currentUser}) {
               <ListItemButton>
                 <ListItemText primary={`${match.first_name} ${match.last_name}`} />
               </ListItemButton>
+              <Rating
+                name={`simple-controlled-${index}`}
+                value={match.rating}
+                onChange={(event, newValue) => {
+                  if (newValue !== null) {
+                    updateRating(match.id, newValue);
+                  }
+                }}
+              />
             </ListItem>
           ))}
         </List>

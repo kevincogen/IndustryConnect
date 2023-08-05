@@ -28,6 +28,7 @@ const connectRoutes = require('./routes/connect');
 const passRoutes = require('./routes/pass');
 const matchRoutes = require('./routes/match');
 const matchList = require('./routes/matchList');
+const matchRating = require('./routes/matchRating');
 
 // Mount all resource routes
 app.use('/api/users', userApiRoutes);
@@ -40,6 +41,7 @@ app.use('/api/connect', connectRoutes);
 app.use('/api/pass', passRoutes);
 app.use('/api/match', matchRoutes);
 app.use('/api/matchList', matchList);
+app.use('/api/matchRating', matchRating);
 
 
 

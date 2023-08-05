@@ -19,6 +19,7 @@ CREATE TABLE users (
   industry VARCHAR(255),
   connections INTEGER[],
   passes INTEGER[],
+  average_rating FLOAT,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
