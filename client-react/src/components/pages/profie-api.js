@@ -1,6 +1,5 @@
 
 export async function createProfile(userProfile) {
-  console.log("User Profile from createprofile func",userProfile);
   try {
     const response = await fetch("/api/users/register", {
       method: "POST",
@@ -28,7 +27,6 @@ export async function createProfile(userProfile) {
 
 export async function updateProfile(userProfile) {
   try {
-    console.log("User Profile from updateprofile func",userProfile);
     const response = await fetch("/api/users/update", {
       method: "PUT",
       headers: {
