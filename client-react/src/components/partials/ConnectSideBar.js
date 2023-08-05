@@ -11,7 +11,7 @@ const Sidebar = ({ currentUser, connectHistory, passHistory, profiles }) => {
 
       <h3>Connect History</h3>
       <List>
-        {connectHistory.map((profileId, index) => {
+        {connectHistory?.map((profileId, index) => {
           const profile = profiles.find(p => p.id === profileId);
           return (
             <ListItem key={index}>
@@ -23,7 +23,7 @@ const Sidebar = ({ currentUser, connectHistory, passHistory, profiles }) => {
 
       <h3>Pass History</h3>
       <List>
-        {passHistory.map((profileId, index) => {
+        {passHistory?.map((profileId, index) => {
           const profile = profiles.find(p => p.id === profileId);
           return (
             <ListItem key={index}>
