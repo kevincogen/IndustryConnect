@@ -8,30 +8,6 @@ const getUsers = () => {
     });
 };
 
-// const registerUser = async (userData) => {
-//   try {
-//     const { first_name, last_name, email, user_id } = userData;
-//     const values = [first_name, last_name, email, user_id];
-
-//      const query = {
-//       text: `
-//         INSERT INTO users
-//           (first_name, last_name, email, authentication_id)
-//         VALUES
-//           ($1, $2, $3, $4)
-//         RETURNING *
-//       `,
-//       values,
-//     };
-
-//     const result = await pool.query(query);
-//     const newUser = result.rows[0];
-//     return newUser;
-//   } catch (err) {
-//     console.error('Error registering user:', err);
-//     throw new Error('Internal Server Error');
-//   }
-// };
 
 const createUserProfile = async (userData) => {
   try {
@@ -64,7 +40,63 @@ const createUserProfile = async (userData) => {
   }
 };
 
-module.exports = { getUsers, createUserProfile };
+
+const getUserProfileByAuthenticationId = async (authenticationId) => {
+  try {
+    const query = {
+      // select everything fromt the user object except the update_at
+      text: 'SELECT first_name, last_name, email, bio, education, experience, linkedin, twitter, github, facebook, website, authentication_id, created_at FROM users WHERE authentication_id = $1',
+      values: [authenticationId],
+    };
+    const { rows } = await db.query(query);
+    return rows[0];
+  } catch (error) {
+    throw new Error('Error fetching user profile from database:', error);
+  }
+};
+
+// update user profile
+
+const updateUserProfile = async (userData) => {
+  try {
+    const { first_name, last_name, email, authentication_id, created_at, ...fieldsToUpdate } = userData;
+    const fieldNames = ['first_name', 'last_name', 'email', 'authentication_id'];
+    const values = [first_name, last_name, email, authentication_id];
+
+    for (const fieldName in fieldsToUpdate) {
+      fieldNames.push(fieldName);
+      values.push(fieldsToUpdate[fieldName]);
+    }
+
+    const updateColumns = fieldNames.map((fieldName, index) => `${fieldName} = $${index + 1}`).join(', ');
+
+    const query = {
+      text: `
+        UPDATE users
+        SET ${updateColumns}
+        WHERE authentication_id = $4
+        RETURNING *
+      `,
+      values,
+    };
+
+    const { rows } = await db.query(query);
+
+    return rows[0];
+
+  } catch (err) {
+    console.error('Error updating user profile:', err);
+    throw new Error('Internal Server Error');
+  }
+};
+
+
+module.exports = {
+  getUsers,
+  createUserProfile,
+  getUserProfileByAuthenticationId,
+  updateUserProfile,
+ };
 
 
 
