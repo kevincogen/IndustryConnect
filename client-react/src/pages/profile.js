@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { createProfile, updateProfile, getProfile } from "./profie-api";
 import LoginButton from "../components/buttons/login-button";
-import LoginButton from "../components/buttons/login-button";
 
 import {
   TextField,
@@ -148,8 +147,6 @@ const Profile = () => {
       <Navbar />
       <LoginButton />
     <Container component="main" maxWidth="xs" direction="column">
-      <Navbar />
-      <LoginButton />
       <CssBaseline />
       <div>
         <Grid container spacing={2}>
