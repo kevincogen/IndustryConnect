@@ -7,5 +7,6 @@ CREATE TABLE matches (
   user_id_2 INT NOT NULL,
   FOREIGN KEY (user_id_2) REFERENCES users (id),
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  UNIQUE (user_id_1, user_id_2)
 );
