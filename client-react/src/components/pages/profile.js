@@ -108,26 +108,31 @@ const Profile = () => {
       website: formData.website,
     };
 
-    if (userProfile.authentication_id && !userProfile.created_at) {
-      // New profile is being created
-      const newUserProfile = await createProfile({
-        ...values,
-        authentication_id: userProfile.authentication_id,
-      });
-      if (newUserProfile) {
-        setUserProfile(newUserProfile);
-        setFormData(newUserProfile); // Update form data with new user profile
-      }
-    } else if (userProfile.created_at) {
-      // Profile is being updated
-      const updatedUserProfile = await updateProfile({
-        ...values,
-        authentication_id: userProfile.authentication_id,
-      });
-      if (updatedUserProfile) {
-        setUserProfile(updatedUserProfile);
-        setFormData(updatedUserProfile); // Update form data with updated user profile
-      }
+    try {
+      if (userProfile.authentication_id && !userProfile.created_at) {
+        // New profile is being created
+        const newUserProfile = await createProfile({
+          ...values,
+          authentication_id: userProfile.authentication_id,
+        });
+        if (newUserProfile) {
+          setUserProfile(newUserProfile);
+          setFormData(newUserProfile); // Update form data with new user profile
+        }
+      } else if (userProfile.created_at) {
+        // Profile is being updated
+        const updatedUserProfile = await updateProfile({
+          ...values,
+          authentication_id: userProfile.authentication_id,
+        });
+        if (updatedUserProfile) {
+          setUserProfile(updatedUserProfile);
+          setFormData(updatedUserProfile); // Update form data with updated user profile
+        }
+        
+      } 
+    } catch (error) {
+      console.error("Error updating user profile:", error);
     }
   };
 
@@ -295,8 +300,12 @@ const Profile = () => {
 
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <Button type="submit" variant="contained" color="primary">
-                Save
+              <Button 
+                type="submit" 
+                variant="contained" 
+                color="primary"
+              >
+                Update Profile
               </Button>
             </Grid>
 
@@ -309,6 +318,7 @@ const Profile = () => {
                 Logout
               </Button>
             </Grid>
+
           </Grid>
         </form>
       </div>
@@ -317,5 +327,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-
