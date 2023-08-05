@@ -11,6 +11,8 @@ import {
   Grid,
   Button,
 } from "@mui/material";
+import React from "react";
+import Navbar from "../components/partials/navbar"
 
 const Profile = () => {
   const { user, isLoading, logout } = useAuth0();
@@ -138,6 +140,7 @@ const Profile = () => {
 
   return (
     <Container component="main" maxWidth="xs" direction="column">
+      <Navbar />
       <CssBaseline />
       <div>
         <Grid container spacing={2}>
@@ -321,7 +324,8 @@ const Profile = () => {
 
           </Grid>
         </form>
-      </div>
+    
+    </div>  
     </Container>
   );
 };

@@ -3,3 +3,4 @@ public/styles
 .env
 *.log
 *.sqlite3
+db/seeds/kevin_test_users.md

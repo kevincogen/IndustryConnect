@@ -1,4 +1,4 @@
-const { faker } = require('@faker-js/faker');
+const faker = require('faker');
 const { Pool } = require('pg');
 
 // -- Configure the database connection
@@ -13,14 +13,14 @@ const pool = new Pool({
 // -- Function to generate random user data
 const generateRandomUser = () => {
   return {
-    first_name: faker.person.firstName(),
-    last_name: faker.person.lastName(),
+    first_name: faker.name.firstName(),
+    last_name: faker.name.lastName(),
     email: faker.internet.email(),
-    authentication_id: faker.string.uuid(),
+    authentication_id: faker.datatype.uuid(),
     profile_picture: faker.image.avatar(),
     bio: faker.lorem.paragraph(),
     education: faker.lorem.sentence(),
-    experience: faker.person.jobTitle(),
+    experience: faker.name.jobTitle(),
     linkedin: faker.internet.url(),
     twitter: faker.internet.url(),
     github: faker.internet.url(),
@@ -72,3 +72,4 @@ const seedUsersTable = async () => {
 };
 
 seedUsersTable();
+
