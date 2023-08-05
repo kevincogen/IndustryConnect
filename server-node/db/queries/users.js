@@ -49,7 +49,6 @@ const getUserProfileByAuthenticationId = async (authenticationId) => {
       values: [authenticationId],
     };
     const { rows } = await db.query(query);
-    console.log("this is rows", rows)
     return rows[0];
   } catch (error) {
     throw new Error('Error fetching user profile from database:', error);
@@ -60,7 +59,6 @@ const getUserProfileByAuthenticationId = async (authenticationId) => {
 
 const updateUserProfile = async (userData) => {
   try {
-    console.log("this is userData", userData)
     const { first_name, last_name, email, authentication_id, created_at, ...fieldsToUpdate } = userData;
     const fieldNames = ['first_name', 'last_name', 'email', 'authentication_id'];
     const values = [first_name, last_name, email, authentication_id];
@@ -69,7 +67,6 @@ const updateUserProfile = async (userData) => {
       fieldNames.push(fieldName);
       values.push(fieldsToUpdate[fieldName]);
     }
-    console.log("this is fieldNames", fieldNames)
 
     const updateColumns = fieldNames.map((fieldName, index) => `${fieldName} = $${index + 1}`).join(', ');
 
@@ -83,11 +80,9 @@ const updateUserProfile = async (userData) => {
       values,
     };
 
-    console.log("this is query", query)
     const { rows } = await db.query(query);
 
-    console.log("this is rows", rows)
-    return rows;
+    return rows[0];
 
   } catch (err) {
     console.error('Error updating user profile:', err);
