@@ -1,6 +1,9 @@
 // load .env data into process.env
 require('dotenv').config();
 
+const { getChatHistoryFromDatabase, postMessageToDB } = require('./db/queries/messages');
+
+
 // Web server config
 const express = require('express');
 const cors = require('cors');
@@ -53,30 +56,39 @@ app.use('/api/pass', passRoutes);
 app.use('/api/match', matchRoutes);
 app.use('/api/matchList', matchList);
 app.use('/api/matchRating', matchRating);
-
-
-
-// const corsOptions = {
-//   origin: 'http://localhost:3000',
-// };
-
-// app.use(cors(corsOptions));
-
-
 // socket.io
+
 io.on('connection', (socket) => {
   console.log('a user connected');
 
-  socket.emit('system', 'Welcome to the chat!');
+  // socket.emit('system', 'Welcome to the chat!');
+
+  // Handle the get_chat_history event from the client
+  socket.on('get_chat_history', async (matchId, callback) => {
+    try {
+      const chatHistory = await getChatHistoryFromDatabase(matchId);
+      console.log("chatHistory: ", chatHistory);
+      callback(chatHistory);
+    } catch (error) {
+      console.error('Error fetching chat history:', error);
+      callback([]); // Empty array or error handling response
+    }
+  });
+
+  // handle incoming messages from client and store in db
+  socket.on('chat message', (msg) => {
+    console.log('msg: ' + msg);
+    postMessageToDB(msg);
+
+    io.emit('chat message', msg);
+  });
 
   socket.on('disconnect', () => {
       console.log('user disconnected');
-  }
-  );
-
+  });
 });
+
 
 server.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
-
