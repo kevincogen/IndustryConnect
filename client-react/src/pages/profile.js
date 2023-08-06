@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { createProfile, updateProfile, getProfile } from "./profie-api";
@@ -12,7 +13,6 @@ import {
   Grid,
   Button,
 } from "@mui/material";
-import React from "react";
 import Navbar from "../components/partials/navbar"
 
 const Profile = () => {
@@ -143,6 +143,9 @@ const Profile = () => {
   };
 
   return (
+    <>
+    <Navbar />
+    <LoginButton />
     <Container component="main" maxWidth="xs" direction="column">
       <CssBaseline />
       <div>
@@ -343,6 +346,7 @@ const Profile = () => {
     
     </div>  
     </Container>
+    </>
   );
 };
 
