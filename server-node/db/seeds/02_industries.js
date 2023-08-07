@@ -68,4 +68,4 @@ const seedIndustriesTable = async () => {
   }
 };
 
-seedIndustriesTable();
+module.exports = seedIndustriesTable;

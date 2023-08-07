@@ -9,13 +9,11 @@ import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 
 
-export default function MatchList({currentUser}) {
+export default function MatchList({currentUser, refreshMatches }) {
   const [matches, setMatches] = useState([]);
   const currentUserId = currentUser.id;
   const updateRating = async (ratedUserId, newValue) => {
-    console.log("ratedUserId: ", ratedUserId);
-    console.log("currentUserId: ", currentUserId);
-    console.log("newValue: ", newValue);
+    
     try {
       await axios.put(`http://localhost:8080/api/matchRating/${ratedUserId}`, {
         raterId: currentUserId,
@@ -36,7 +34,7 @@ export default function MatchList({currentUser}) {
       }
     };
     getMatchList();
-  }, [currentUserId]);
+  }, [currentUserId, refreshMatches]);
 
   return (
     <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>

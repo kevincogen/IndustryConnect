@@ -5,13 +5,13 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import MatchList from "./MatchTable";
 
-const Sidebar = ({ currentUser, connectHistory, passHistory, profiles }) => {
+const Sidebar = ({ currentUser, connectHistory, passHistory, profiles, refreshMatches }) => {
   console.log(currentUser)
   return (
     <Container className="profile-sidebar">
       <ProfileCard profile={currentUser} />
       <h3>Match List</h3>
-      <MatchList currentUser={currentUser}/>
+      <MatchList currentUser={currentUser} refreshMatches={refreshMatches}/>
       <h3>Connect History</h3>
       <List>
         {connectHistory?.map((profileId, index) => {

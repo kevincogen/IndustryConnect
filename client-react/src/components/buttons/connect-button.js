@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 
 const ConnectButton = (props) => {
   return (
-    <Button variant="contained" color="success" onClick={props.onClick}>
+    <Button sx={"background-color: #65adb2"} variant="contained" color="success" onClick={props.onClick}>
       Connect
     </Button>
   )

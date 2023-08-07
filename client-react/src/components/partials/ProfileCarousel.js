@@ -3,18 +3,18 @@ import ProfileCard from "./ProfileCard";
 import Container from '@mui/material/Container';
 
 const ProfileCarousel = (props) => {
-  const profile = props.profiles[0];
+  const profile = props.profiles[props.currentProfileIndex];
 
   return (
-    <Container maxWidth="sm">
-          <div className="profile-carousel-container">
+    <div className="profile-carousel">
       <ProfileCard 
+        carousel={true}
+        className="carousel-card"
         profile={profile}
         connection={props.connection}
         currentUser={props.currentUser}
       />
     </div>
-    </Container>
   )
 };
 

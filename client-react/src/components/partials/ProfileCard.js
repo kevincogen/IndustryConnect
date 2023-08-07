@@ -5,7 +5,7 @@ import TinderCard from 'react-tinder-card'
 import Rating from '@mui/material/Rating';
 
 
-function ProfileCard({ profile, connection, currentUser }) {
+function ProfileCard({ carousel, profile, connection, currentUser }) {
   const onSwipe = (direction) => {
     console.log(`you swiped: ${direction}`)
   };
@@ -54,8 +54,11 @@ function ProfileCard({ profile, connection, currentUser }) {
             GitHub
           </Button>
         </CardActions>
-        <ConnectButton onClick={() => connection.handleConnect(profile, currentUser)} />
+        {carousel && 
+        (<div className="connect-pass">
         <PassButton onClick={() => connection.handlePass(profile)} />
+        <ConnectButton onClick={() => connection.handleConnect(profile, currentUser)} />
+        </div>)}
       </Card>
     </TinderCard>
   );

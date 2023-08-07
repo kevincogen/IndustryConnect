@@ -10,8 +10,42 @@ const pool = new Pool({
   port: 5432,
 });
 
+// -- List of industry categories
+const industryCategories = [
+  "Information Technology",
+  "Healthcare",
+  "Finance",
+  "Education",
+  "Marketing",
+  "Sales",
+  "Engineering",
+  "Human Resources",
+  "Design",
+  "Business Development",
+  "Customer Service",
+  "Project Management",
+  "Consulting",
+  "Media and Communication",
+  "Legal Services",
+  "Accounting",
+  "Administration",
+  "Research and Development",
+  "Manufacturing",
+  "Retail",
+  "Hospitality and Tourism",
+  "Real Estate",
+  "Nonprofit and Social Services",
+  "Government and Public Administration",
+  "Art and Entertainment",
+  "Science and Technology",
+  "Environmental and Sustainability",
+  "Transportation and Logistics",
+  "Architecture and Construction",
+  "Sports and Fitness"
+];
+
 // -- Function to generate random user data
-const generateRandomUser = () => {
+const generateRandomUser = (industry) => {
   return {
     first_name: faker.person.firstName(),
     last_name: faker.person.lastName(),
@@ -21,6 +55,7 @@ const generateRandomUser = () => {
     bio: faker.lorem.paragraph(),
     education: faker.lorem.sentence(),
     experience: faker.person.jobTitle(),
+    industry, // set the industry
     linkedin: faker.internet.url(),
     twitter: faker.internet.url(),
     github: faker.internet.url(),
@@ -34,33 +69,39 @@ const seedUsersTable = async () => {
   const client = await pool.connect();
   try {
     await client.query('DELETE FROM users');
-    const numOfUsers = 50;
-    for (let i = 0; i < numOfUsers; i++) {
-      const userData = generateRandomUser();
-      const query = {
-        text: `
-          INSERT INTO users
-            (
-              first_name,
-              last_name,
-              email,
-              authentication_id,
-              profile_picture,
-              bio,
-              education,
-              experience,
-              linkedin,
-              twitter,
-              github,
-              facebook,
-              website
-            )
-          VALUES
-            ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
-        `,
-        values: Object.values(userData),
-      };
-      await client.query(query);
+    const usersPerIndustry = 10;
+    let userCount = 1;
+    for (const industry of industryCategories) {
+      for (let i = 0; i < usersPerIndustry; i++) {
+        const userData = generateRandomUser(industry);
+        const query = {
+          text: `
+            INSERT INTO users
+              (
+                first_name,
+                last_name,
+                email,
+                authentication_id,
+                profile_picture,
+                bio,
+                education,
+                experience,
+                industry,
+                linkedin,
+                twitter,
+                github,
+                facebook,
+                website,
+                connections
+              )
+            VALUES
+              ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+          `,
+          values: [...Object.values(userData), userCount % 3 === 0 ? [301] : []],
+        };
+        await client.query(query);
+        userCount++;
+      }
     }
     console.log('Users table seeded successfully.');
   } catch (err) {
@@ -71,4 +112,5 @@ const seedUsersTable = async () => {
   }
 };
 
-seedUsersTable();
+module.exports = seedUsersTable;
+

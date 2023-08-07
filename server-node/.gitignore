@@ -4,3 +4,6 @@ public/styles
 *.log
 *.sqlite3
 db/seeds/kevin_test_users.md
+db/seeds/
+db/seeds_ignore/
+bin/resetdb.js
