@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom';
 import SearchBar from './searchbar';
 import NetworkButton from '../buttons/network-button';
 
+
 const pages = ['Profile', 'Connect', 'Chat'];
 const settings = ['Profile', 'Connect', 'Chat', 'Logout'];
 
@@ -59,7 +60,7 @@ function ResponsiveAppBar({ showSearch, industries, selectedIndustries, setSelec
               textDecoration: 'none',
             }}
           >
-            INDUSTYCONNECT
+            INDUSTRYCONNECT
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

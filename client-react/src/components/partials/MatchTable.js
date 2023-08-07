@@ -47,6 +47,7 @@ export default function MatchList({currentUser, refreshMatches }) {
               </ListItemButton>
               <Rating
                 name={`simple-controlled-${index}`}
+                size="small"
                 value={match.rating}
                 onChange={(event, newValue) => {
                   if (newValue !== null) {
