@@ -52,6 +52,7 @@ const generateRandomUser = (industry) => {
     email: faker.internet.email(),
     authentication_id: faker.string.uuid(),
     profile_picture: faker.image.avatar(),
+    industry: industryCategories[Math.floor(Math.random() * industryCategories.length)],
     bio: faker.lorem.paragraph(),
     education: faker.lorem.sentence(),
     experience: faker.person.jobTitle(),
@@ -69,39 +70,34 @@ const seedUsersTable = async () => {
   const client = await pool.connect();
   try {
     await client.query('DELETE FROM users');
-    const usersPerIndustry = 10;
-    let userCount = 1;
-    for (const industry of industryCategories) {
-      for (let i = 0; i < usersPerIndustry; i++) {
-        const userData = generateRandomUser(industry);
-        const query = {
-          text: `
-            INSERT INTO users
-              (
-                first_name,
-                last_name,
-                email,
-                authentication_id,
-                profile_picture,
-                bio,
-                education,
-                experience,
-                industry,
-                linkedin,
-                twitter,
-                github,
-                facebook,
-                website,
-                connections
-              )
-            VALUES
-              ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
-          `,
-          values: [...Object.values(userData), userCount % 3 === 0 ? [301] : []],
-        };
-        await client.query(query);
-        userCount++;
-      }
+    const numOfUsers = 50;
+    for (let i = 0; i < numOfUsers; i++) {
+      const userData = generateRandomUser();
+      const query = {
+        text: `
+          INSERT INTO users
+            (
+              first_name,
+              last_name,
+              email,
+              authentication_id,
+              profile_picture,
+              industry,
+              bio,
+              education,
+              experience,
+              linkedin,
+              twitter,
+              github,
+              facebook,
+              website
+            )
+          VALUES
+            ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+        `,
+        values: Object.values(userData),
+      };
+      await client.query(query);
     }
     console.log('Users table seeded successfully.');
   } catch (err) {

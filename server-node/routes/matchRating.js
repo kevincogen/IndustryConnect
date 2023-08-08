@@ -3,12 +3,11 @@ const router = express.Router();
 const db = require('../db/connection');
 
 router.put('/:userId', async (req, res) => {
-
   const { raterId, rating } = req.body;
   const ratedUserId = req.params.userId;
 
   if (!ratedUserId || !raterId || !rating) {
-    console.log("rating oops")
+    // console.log("rating oops")
     return res.status(400).json({ error: 'Missing parameters' });
   }
 
