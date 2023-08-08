@@ -52,10 +52,8 @@ const InputField = styled(TextField)({
   borderRadius: '16px',
   paddingRight: '8px',
   paddingLeft: '8px',
-  marginLeft: '8px',
-  marginRight: '8px',
+  margin: '8px',
   boxShadow: '0px 2px 4px lightgrey',
-  marginBottom: '8px',
 });
 
 const SendButton = styled(Button)({
