@@ -70,8 +70,6 @@ const Connect = () => {
     connection.handleConnect(profile, currentUser);
     handleRefresh(); 
     setCurrentProfileIndex(prevIndex => prevIndex + 1);
-    console.log("profileIndex +1")
-    console.log(currentProfileIndex);
     setRefreshMatches(oldValue => oldValue + 1); // added this
   };
   
@@ -79,7 +77,6 @@ const Connect = () => {
     connection.handlePass(profile);
     handleRefresh(); 
     setCurrentProfileIndex(prevIndex => prevIndex + 1);
-    console.log(currentProfileIndex);
     setRefreshMatches(oldValue => oldValue + 1); // added this
   };
   

@@ -45,7 +45,7 @@
 
 #root .profile-sidebar.MuiContainer-root {
   position: static;
-  margin-top: 150px;
+  margin-top: 95px;
   left: 0;
   width: 25%;
 }
@@ -53,7 +53,7 @@
 .page-body {
   display: flex;
   flex-direction: column;
-  margin-top: 150px;
+  margin-top: 95px;
   margin-right: 23%;
   width: 70%;
   overflow-y: auto;
@@ -61,7 +61,7 @@
 
 .search-bar {
   position: fixed;
-  margin-top: 150px;
+  margin-top: 95px;
   right: 0;
   margin-right: 25px;
   margin-left: 25px;

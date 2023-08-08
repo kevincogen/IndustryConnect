@@ -28,7 +28,12 @@ const ProfileCarousel = (props) => {
 
   return (
     <div className="profile-carousel">
-      <TinderCard key={props.currentProfileIndex} onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')} preventSwipe={['down', 'up']}>
+      <TinderCard 
+          key={props.currentProfileIndex}
+          swipeRequirementType="position"
+          swipeThreshold={100}
+          onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')} 
+          preventSwipe={['down', 'up']}>
         <ProfileCard 
           carousel={true}
           className="carousel-card"
