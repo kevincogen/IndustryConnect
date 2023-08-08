@@ -5,6 +5,7 @@ require('dotenv').config();
 const fs = require('fs');
 const chalk = require('chalk');
 const db = require('../db/connection');
+const path = require('path');
 
 // PG connection setup
 // const connectionString = process.env.DATABASE_URL ||
@@ -25,12 +26,14 @@ const runSchemaFiles = async () => {
 
 const runSeedFiles = async () => {
   console.log(chalk.cyan(`-> Loading Seeds ...`));
-  const schemaFilenames = fs.readdirSync('./db/seeds');
+  const seedFilenames = fs.readdirSync(path.join(__dirname, '../db/seeds'));
 
-  for (const fn of schemaFilenames) {
-    const sql = fs.readFileSync(`./db/seeds/${fn}`, 'utf8');
-    console.log(`\t-> Running ${chalk.green(fn)}`);
-    await db.query(sql);
+  for (const fn of seedFilenames) {
+    if (path.extname(fn) === '.js') {
+      console.log(`\t-> Running ${chalk.green(fn)}`);
+      const seedFunction = require(path.join(__dirname, '../db/seeds', fn));
+      await seedFunction();
+    }
   }
 };
 

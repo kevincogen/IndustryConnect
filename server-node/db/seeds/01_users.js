@@ -45,7 +45,7 @@ const industryCategories = [
 ];
 
 // -- Function to generate random user data
-const generateRandomUser = () => {
+const generateRandomUser = (industry) => {
   return {
     first_name: faker.person.firstName(),
     last_name: faker.person.lastName(),
@@ -56,6 +56,7 @@ const generateRandomUser = () => {
     bio: faker.lorem.paragraph(),
     education: faker.lorem.sentence(),
     experience: faker.person.jobTitle(),
+    industry, // set the industry
     linkedin: faker.internet.url(),
     twitter: faker.internet.url(),
     github: faker.internet.url(),
@@ -107,4 +108,5 @@ const seedUsersTable = async () => {
   }
 };
 
-seedUsersTable();
+module.exports = seedUsersTable;
+

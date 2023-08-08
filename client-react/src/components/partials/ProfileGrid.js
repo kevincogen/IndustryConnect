@@ -2,11 +2,11 @@ import React from "react";
 import ProfileCard from "./ProfileCard";
 import Container from '@mui/material/Container';
 
-const ProfileGrid = ({ profiles, connection, currentUser }) => {
+const ProfileGrid = ({ profiles, connection, currentUser, currentProfileIndex }) => {
   return (
-    <Container maxWidth="sm">
+    <Container className="profile-grid-container" maxWidth="lg">
       <div className="profile-grid">
-        {profiles.map((profile, index) => 
+        {profiles.slice(currentProfileIndex + 1).map((profile, index) => 
           <ProfileCard key={index} profile={profile} connection={connection} currentUser={currentUser} />
         )}
       </div>  

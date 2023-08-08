@@ -5,20 +5,14 @@ import TinderCard from 'react-tinder-card'
 import Rating from '@mui/material/Rating';
 
 
-function ProfileCard({ profile, connection, currentUser }) {
-  const onSwipe = (direction) => {
-    console.log(`you swiped: ${direction}`)
-  };
-  const onCardLeftScreen = (myIdentifier) => {
-    console.log(`${myIdentifier} left the screen`)
-  }
+function ProfileCard({ carousel, profile, connection, currentUser }) {
+
   // Check if profile or necessary keys are undefined or null
   if (!profile || !profile.first_name || !profile.last_name) {
     // You can render a placeholder or return null
     return <div>Profile not available</div>;
   }
   return (
-    <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')} preventSwipe={['right', 'left']}>
       <Card sx={{ maxWidth: 345 }}>
         <CardMedia
           sx={{ height: 140 }}
@@ -54,10 +48,12 @@ function ProfileCard({ profile, connection, currentUser }) {
             GitHub
           </Button>
         </CardActions>
-        <ConnectButton onClick={() => connection.handleConnect(profile, currentUser)} />
+        {/* {carousel && 
+        (<div className="connect-pass">
         <PassButton onClick={() => connection.handlePass(profile)} />
+        <ConnectButton onClick={() => connection.handleConnect(profile, currentUser)} />
+        </div>)} */}
       </Card>
-    </TinderCard>
   );
 }
 

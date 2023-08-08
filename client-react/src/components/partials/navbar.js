@@ -13,11 +13,15 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import LogoutButton from '../buttons/logout-button';
+import { Link } from 'react-router-dom';
+import SearchBar from './searchbar';
+import NetworkButton from '../buttons/network-button';
+
 
 const pages = ['Profile', 'Connect', 'Chat'];
 const settings = ['Profile', 'Connect', 'Chat', 'Logout'];
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar({ showSearch, industries, selectedIndustries, setSelectedIndustries, filterProfilesByIndustry }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -37,7 +41,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed" sx={{backgroundColor: '#13264D'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -56,7 +60,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            INDUSTYCONNECT
+            INDUSTRYCONNECT
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -120,12 +124,13 @@ function ResponsiveAppBar() {
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
+                component={Link}
+                to={`/${page.toLowerCase()}`}
               >
                 {page}
               </Button>
             ))}
           </Box>
-
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

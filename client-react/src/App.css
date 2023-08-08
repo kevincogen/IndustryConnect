@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,10 +35,78 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+
+.master-body {
+  display: flex;
+  background-color: #F6F8F6;
+}
+
+#root .profile-sidebar.MuiContainer-root {
+  position: static;
+  margin-top: 95px;
+  left: 0;
+  width: 25%;
+}
+
+.page-body {
+  display: flex;
+  flex-direction: column;
+  margin-top: 95px;
+  margin-right: 23%;
+  width: 70%;
+  overflow-y: auto;
+}
+
+.search-bar {
+  position: fixed;
+  margin-top: 95px;
+  right: 0;
+  margin-right: 25px;
+  margin-left: 25px;
+  border-radius: 10px;
+  border: 1px solid grey;
+  background-color: white;
+  width: 20%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-carousel {
+  padding: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: space-between; */
+  border-radius: 10px;
+  border: 1px solid grey;
+  background-color: white;
+}
+
+.carousel-card {
+  margin: 10px;
+}
+
+.profile-grid-container {
+  border-radius: 10px;
+  margin: 5px;
+  border: 1px solid grey;
+  background-color: white;
 }
 
 .profile-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(3, 2fr);
+  gap: 10px;
+}
+
+.connect-pass {
+  /* border: 2px solid black; */
+  width: 75%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 40px;
 }

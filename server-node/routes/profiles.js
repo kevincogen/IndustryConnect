@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 
 // Fetch only Logged in User
 router.get('/user', async (req, res) => {
-  console.log(req.headers['x-auth0-sub'])
+
   const authenticationId = req.headers['x-auth0-sub'];
   const query = `
     SELECT * FROM users WHERE authentication_id = $1;

@@ -9,6 +9,7 @@ import useGetCurrentUser from '../hooks/useGetCurrentUser';
 import ProfileCarousel from '../components/partials/ProfileCarousel';
 import ProfileGrid from '../components/partials/ProfileGrid';
 import Sidebar from '../components/partials/ConnectSideBar';
+import { Box } from '@mui/material';
 
 
 const Connect = () => {
@@ -24,6 +25,8 @@ const Connect = () => {
     setFirstSub(currentUser[0].authentication_id)
     setRefreshKey(refreshKey + 1);
   };
+  const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
+  const [refreshMatches, setRefreshMatches] = useState(0);
 
   useEffect(() => {   
     fetch('http://localhost:8080/api/industries')
@@ -65,37 +68,69 @@ const Connect = () => {
   // Modified connect and pass handlers to include refreshing the current user
   const handleConnectWrapper = (profile) => {
     connection.handleConnect(profile, currentUser);
-    handleRefresh(); // Call the handleRefresh function to re-fetch the current user
+    handleRefresh(); 
+    setCurrentProfileIndex(prevIndex => prevIndex + 1);
+    setRefreshMatches(oldValue => oldValue + 1); // added this
   };
-
+  
   const handlePassWrapper = (profile) => {
     connection.handlePass(profile);
-    handleRefresh(); // Call the handleRefresh function to re-fetch the current user
+    handleRefresh(); 
+    setCurrentProfileIndex(prevIndex => prevIndex + 1);
+    setRefreshMatches(oldValue => oldValue + 1); // added this
   };
-  console.log(currentUser)
+  
   if (currentUser === null) {
     return <div>Loading...</div>;
   }
-  console.log(profiles)
+
   return (
     <div>
-      <Navbar />
-      <SearchBar
-        options={industries}
-        value={selectedIndustries}
-        onChange={(newValue) => setSelectedIndustries(newValue)}
-      />
-      <NetworkButton onClick={filterProfilesByIndustry}>Network</NetworkButton>
-      <ProfileCarousel profiles={profiles} connection={{ handleConnect: handleConnectWrapper, handlePass: handlePassWrapper }} currentUser={currentUser[0]} />
-      <ProfileGrid profiles={profiles} connection={{ handleConnect: handleConnectWrapper, handlePass: handlePassWrapper }} currentUser={currentUser} />
-      <Sidebar
-        currentUser={currentUser[0]}
-        connectHistory={currentUser[0].connections}
-        passHistory={currentUser[0].passes}
-        profiles={profiles}
-      />
-    </div>
-  );
+        <Navbar
+          showSearch={true}
+          industries={industries} 
+          selectedIndustries={selectedIndustries} 
+          setSelectedIndustries={setSelectedIndustries} 
+          filterProfilesByIndustry={filterProfilesByIndustry} 
+        />
+        <div className="master-body">
+          <Sidebar className="profile-sidebar" 
+            currentUser={currentUser[0]} 
+            connectHistory={currentUser[0].connections} 
+            passHistory={currentUser[0].passes} 
+            refreshMatches={refreshMatches}
+            profiles={profiles} />
+          <div className="page-body">
+          {profiles.length === 0 ? (
+              <NetworkButton 
+                style={{ height: '30px' }}
+                onClick={filterProfilesByIndustry} 
+                size="large"
+              >
+                Start Networking!
+              </NetworkButton>
+            ) : (
+              <ProfileCarousel profiles={profiles} currentProfileIndex={currentProfileIndex} connection={{ handleConnect: handleConnectWrapper, handlePass: handlePassWrapper }} currentUser={currentUser[0]} />
+            )
+          }
+            <ProfileGrid profiles={profiles} currentProfileIndex={currentProfileIndex} connection={{ handleConnect: handleConnectWrapper, handlePass: handlePassWrapper }} currentUser={currentUser} />
+            </div>
+            <div className="search-bar">
+            <NetworkButton 
+                  style={{ height: '30px' }}
+                  onClick={filterProfilesByIndustry} size="small"
+              >
+                  Industry Search
+              </NetworkButton>
+              <SearchBar
+                  options={industries}
+                  value={selectedIndustries}
+                  onChange={(newValue) => setSelectedIndustries(newValue)}
+              />
+            </div>
+          </div>
+        </div>
+  );  
 };
 
 export default Connect;

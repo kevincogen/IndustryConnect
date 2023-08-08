@@ -26,7 +26,6 @@ router.get('/:currentUserId', cors(), async (req, res) => {
 
   try {
     const result = await db.query(query, [currentUserId]);
-    console.log(result)
     return res.json(result.rows);
   } catch (err) {
     return res.status(500).json({ error: "Internal Server Error" });

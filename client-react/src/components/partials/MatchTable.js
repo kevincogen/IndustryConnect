@@ -12,7 +12,7 @@ import Rating from '@mui/material/Rating';
 
 
 
-export default function MatchList({currentUser}) {
+export default function MatchList({currentUser, refreshMatches }) {
   const [matches, setMatches] = useState([]);
   const currentUserId = currentUser.id;
   
@@ -28,6 +28,7 @@ export default function MatchList({currentUser}) {
     // console.log("ratedUserId: ", ratedUserId);
     // console.log("currentUserId: ", currentUserId);
     // console.log("newValue: ", newValue);
+    
     try {
       await axios.put(`http://localhost:8080/api/matchRating/${ratedUserId}`, {
         raterId: currentUserId,
@@ -48,7 +49,7 @@ export default function MatchList({currentUser}) {
       }
     };
     getMatchList();
-  }, [currentUserId]);
+  }, [currentUserId, refreshMatches]);
 
   return (
     <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
@@ -64,6 +65,7 @@ export default function MatchList({currentUser}) {
               </ListItemButton>
               <Rating
                 name={`simple-controlled-${index}`}
+                size="small"
                 value={match.rating}
                 onChange={(event, newValue) => {
                   if (newValue !== null) {
