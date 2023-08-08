@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import { io } from "socket.io-client";
-import { Grid, Typography, Button, TextField} from '@mui/material';
+import { Grid, Typography } from '@mui/material';
+import moment from 'moment';
+import { ChatHistoryContainer, ChatBubble, Timestamp, FormContainer, InputField, SendButton } from '../pages/chat-styles';
+
+const formatTimestamp = (timestamp) => {
+  return moment(timestamp).fromNow();
+};
+
 
 export default function Chat() {
   const [chatHistory, setChatHistory] = useState([]); 
   const location = useLocation();
   const match = location?.state?.match;
   const currentUserId = location?.state?.currentUserId;  
-
 
 
 useEffect(() => {
@@ -66,30 +72,29 @@ useEffect(() => {
             <Typography variant="h6" component="h3" gutterBottom>
               Chat History
             </Typography>
+            <ChatHistoryContainer>
             {chatHistory.map((message, index) => (
-              <Typography key={index} variant="body1" gutterBottom>
-                {message.sender}: {message.message}
-              </Typography>
+              <ChatBubble key={index} isCurrentUser={message.sender_id === currentUserId}>
+                <span>{message.message}</span>
+                <Timestamp isCurrentUser={message.sender_id === currentUserId}>
+                  {formatTimestamp(message.created_at)}
+                </Timestamp>
+              </ChatBubble>
             ))}
+            </ChatHistoryContainer>
         </Grid>
-        <form onSubmit={handleSubmit}>
-         <Grid item xs={12}>
-           <TextField
-             id="outlined-multiline-static"
-             label="Message"
-             multiline
-             rows={2}
-             variant="outlined"
-              name="message"
-
-           />
-         </Grid>
-         <Grid item xs={12}>
-           <Button type="submit" variant="contained" color="primary">
-             Send
-           </Button>
-         </Grid>
-         </form>
+        <FormContainer onSubmit={handleSubmit}>
+          <InputField
+            id="outlined-multiline-static"
+            label="Message"
+            multiline
+            variant="outlined"
+            name="message"
+          />
+          <SendButton type="submit" variant="contained" color="primary">
+            Send
+          </SendButton>
+        </FormContainer>
        </Grid>
       </>
     )
