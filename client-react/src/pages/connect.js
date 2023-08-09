@@ -54,7 +54,6 @@ const Connect = () => {
       .then(data => setProfiles(data))
     } else {
       const industryQuery = selectedIndustries.join('.');
-      // Encode the string to make it URL-safe
       fetch(`http://localhost:8080/api/profiles-by-industries/${industryQuery}`, {
         headers: {
           'X-Auth0-Sub': sub
@@ -65,19 +64,19 @@ const Connect = () => {
     }
   };
 
-  // Modified connect and pass handlers to include refreshing the current user
+  // connect and pass handlers to include refreshing the current user
   const handleConnectWrapper = (profile) => {
     connection.handleConnect(profile, currentUser);
     handleRefresh(); 
     setCurrentProfileIndex(prevIndex => prevIndex + 1);
-    setRefreshMatches(oldValue => oldValue + 1); // added this
+    setRefreshMatches(oldValue => oldValue + 1); 
   };
   
   const handlePassWrapper = (profile) => {
     connection.handlePass(profile);
     handleRefresh(); 
     setCurrentProfileIndex(prevIndex => prevIndex + 1);
-    setRefreshMatches(oldValue => oldValue + 1); // added this
+    setRefreshMatches(oldValue => oldValue + 1); 
   };
   
   if (currentUser === null) {

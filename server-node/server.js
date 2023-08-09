@@ -31,6 +31,26 @@ app.use(express.static('public'));
 app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
 
+const { Configuration, OpenAIApi } = require("openai");
+const configuration = new Configuration({
+    apiKey: "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",
+});
+
+const openai = new OpenAIApi(configuration);
+
+const GPTFunction = async (text) => {
+  const response = await openai.createCompletion({
+      model: "text-davinci-003",
+      prompt: text,
+      temperature: 0.6,
+      max_tokens: 250,
+      top_p: 1,
+      frequency_penalty: 1,
+      presence_penalty: 1,
+  });
+  return response.data.choices[0].text;
+};
+
 // Separated Routes for each Resource
 const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
@@ -43,6 +63,7 @@ const passRoutes = require('./routes/pass');
 const matchRoutes = require('./routes/match');
 const matchList = require('./routes/matchList');
 const matchRating = require('./routes/matchRating');
+const resumeCreate = require('./routes/resume-create');
 
 // Mount all resource routes
 app.use('/api/users', userApiRoutes);
@@ -56,6 +77,7 @@ app.use('/api/pass', passRoutes);
 app.use('/api/match', matchRoutes);
 app.use('/api/matchList', matchList);
 app.use('/api/matchRating', matchRating);
+app.use('/api/resume/create', resumeCreate);
 // socket.io
 
 io.on('connection', (socket) => {

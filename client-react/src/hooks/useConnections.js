@@ -15,7 +15,7 @@ const useConnection = (props) => {
 
     try {
       const response = await fetch('http://localhost:8080/api/pass', {
-        method: 'PUT', // or POST, depending on your API
+        method: 'PUT', 
         headers: {
           'Content-Type': 'application/json',
           'X-Auth0-Sub': authenticationId,

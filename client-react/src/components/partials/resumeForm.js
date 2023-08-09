@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Loading from "./Loading";
+import axios from "axios";
+import ResumeAI from "./resumeAI";
 
 const ResumeForm = () => {
   const [fullName, setFullName] = useState("");
@@ -8,16 +10,34 @@ const ResumeForm = () => {
   const [currentTechnologies, setCurrentTechnologies] = useState("");
   const [loading, setLoading] = useState(false);
   const [pastExperience, setPastExperience] =useState([{company: "", position: ""}]);
+  const [result, setResult] = useState({});
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log({
+
+    const payload = {
       fullName,
       currentPosition,
       currentLength,
       currentTechnologies,
+      pastExperience,
+    };
+    console.log(payload);
+    axios
+    .post("http://localhost:8080/api/resume/create", payload, {})
+    .then((res) => {
+        if (res.data.message) {
+            console.log("res", res.data.data);
+            setResult(res.data.data);
+            // navigate("/resumeform");
+        }
+        setLoading(false);  // Reset loading state here after receiving the response
+    })
+    .catch((err) => {
+        console.error(err);
+        setLoading(false);  // Also reset loading state here in case of an error
     });
-    setLoading(true);
+setLoading(true);
   };
 
   if (loading) {
@@ -33,9 +53,9 @@ const ResumeForm = () => {
   };
   const handleUpdatePastExperience = (e, index) => {
     e.preventDefault();
-    const { company, value } = e.target;
+    const { name, value } = e.target;
     const list = [...pastExperience];
-    list[index][company] = value;
+    list[index][name] = value;
     setPastExperience(list);
   }
 
@@ -132,6 +152,7 @@ const ResumeForm = () => {
           </div>
           <button>CREATE RESUME</button>
         </form>
+        {result && <ResumeAI result={result}/>}
     </div>
   )
 };
