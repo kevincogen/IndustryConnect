@@ -31,25 +31,6 @@ app.use(express.static('public'));
 app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
 
-const { Configuration, OpenAIApi } = require("openai");
-const configuration = new Configuration({
-    apiKey: "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",
-});
-
-const openai = new OpenAIApi(configuration);
-
-const GPTFunction = async (text) => {
-  const response = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt: text,
-      temperature: 0.6,
-      max_tokens: 250,
-      top_p: 1,
-      frequency_penalty: 1,
-      presence_penalty: 1,
-  });
-  return response.data.choices[0].text;
-};
 
 // Separated Routes for each Resource
 const userApiRoutes = require('./routes/users-api');
