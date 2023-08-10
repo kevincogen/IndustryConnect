@@ -59,14 +59,16 @@ const getUserProfileByAuthenticationId = async (authenticationId) => {
 
 const updateUserProfile = async (userData) => {
   try {
-    const { first_name, last_name, email, authentication_id, created_at, ...fieldsToUpdate } = userData;
-    const fieldNames = ['first_name', 'last_name', 'email', 'authentication_id'];
-    const values = [first_name, last_name, email, authentication_id];
-
+    const { authentication_id, ...fieldsToUpdate } = userData;
+    // Arrays to store field names and their corresponding values dynamically.
+    const fieldNames = [];
+    const values = [];
     for (const fieldName in fieldsToUpdate) {
       fieldNames.push(fieldName);
       values.push(fieldsToUpdate[fieldName]);
     }
+
+    values.push(authentication_id);
 
     const updateColumns = fieldNames.map((fieldName, index) => `${fieldName} = $${index + 1}`).join(', ');
 
@@ -74,14 +76,14 @@ const updateUserProfile = async (userData) => {
       text: `
         UPDATE users
         SET ${updateColumns}
-        WHERE authentication_id = $4
+        WHERE authentication_id = $${values.length}
         RETURNING *
       `,
       values,
     };
 
     const { rows } = await db.query(query);
-
+    console.log(rows)
     return rows[0];
 
   } catch (err) {
