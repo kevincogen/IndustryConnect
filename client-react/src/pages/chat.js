@@ -62,7 +62,7 @@ export default function Chat() {
       const latestMessage = chatBubbles[chatBubbles.length - 1];
       latestMessage.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [chatBubbles.length])
+  }, [chatBubbles.length, chatHistory])
 
   const handleSubmit = (event) => {
     event.preventDefault();
