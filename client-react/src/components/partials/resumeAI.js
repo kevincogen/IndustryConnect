@@ -3,8 +3,9 @@ import ErrorPage from "./ErrorPage";
 const ResumeAI = ({result}) => {
 //👇🏻 function that replaces the new line with a break tag
 const replaceWithBr = (string) => {
-  return string.replace(/\n/g, "<br />");
-};
+    if (typeof string !== "string") return "";
+    return string.replace(/\n/g, "<br />");
+  };
 
 //👇🏻 returns an error page if the result object is empty
 if (JSON.stringify(result) === "{}") {
@@ -40,11 +41,13 @@ return (
               </div>
               <div>
                   <h2 className='resumeBodyTitle'>WORK HISTORY</h2>
-                  {result.pastExperience.map((work) => (
-                      <p className='resumeBodyContent' key={work.company}>
-                          <span style={{ fontWeight: "bold" }}>{work.company}</span> -{" "}
-                          {work.position}
+                  {result.pastExperience.map((work, index) => (
+                    <div key={index} className='workHistoryItem'>
+                        <h3>{work.company} - {work.position}</h3>
+                      <p className='workHistoryDescription'>
+                            {work.description}
                       </p>
+                    </div>
                   ))}
               </div>
               <div>

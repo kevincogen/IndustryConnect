@@ -31,7 +31,6 @@ app.use(express.static('public'));
 app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
 
-
 // Separated Routes for each Resource
 const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');

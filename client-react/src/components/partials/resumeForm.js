@@ -9,7 +9,7 @@ const ResumeForm = () => {
   const [currentLength, setCurrentLength] = useState("");
   const [currentTechnologies, setCurrentTechnologies] = useState("");
   const [loading, setLoading] = useState(false);
-  const [pastExperience, setPastExperience] =useState([{company: "", position: ""}]);
+  const [pastExperience, setPastExperience] =useState([{company: "", position: "", description: ""}]);
   const [result, setResult] = useState({});
 
   const handleFormSubmit = (e) => {
@@ -45,7 +45,7 @@ setLoading(true);
   }
 
   //Past Experience Build, Remove, Update
-  const handlePastExperience = () => setPastExperience([...pastExperience, { company: "", position: "" }]);
+  const handlePastExperience = () => setPastExperience([...pastExperience, { company: "", position: "", description: "" }]);
   const handleRemovePastExperience = (index) => {
     const list = [...pastExperience];
     list.splice(index, 1);
@@ -115,7 +115,7 @@ setLoading(true);
           <div>
             <h3>Past Experience</h3>
             {pastExperience.map((company, index) => (
-                <div className='nestedContainer' key={index}>
+                <div className='nestedContainer-exp' key={index}>
                     <div className='companies'>
                         <label htmlFor='name'>Company Name</label>
                         <input
@@ -134,7 +134,25 @@ setLoading(true);
                             onChange={(e) => handleUpdatePastExperience(e, index)}
                         />
                     </div>
-
+                    <div className='companies-description'>
+                      <label htmlFor='description'>Job Description</label>
+                      <textarea 
+                        className='input-textarea'
+                        name='description' 
+                        rows="4"
+                        onKeyDown={e => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                const cursorPosition = e.target.selectionStart;
+                                const value = e.target.value;
+                                e.target.value = value.substring(0, cursorPosition) + "\n" + value.substring(cursorPosition);
+                                e.target.selectionStart = cursorPosition + 3;
+                                e.target.selectionEnd = cursorPosition + 3;
+                            }
+                        }}
+                        onChange={(e) => handleUpdatePastExperience(e, index)}
+                    ></textarea>
+                    </div>
                     <div className='btn__group'>
                         {pastExperience.length - 1 === index && pastExperience.length < 4 && (
                             <button id='addBtn' onClick={handlePastExperience}>

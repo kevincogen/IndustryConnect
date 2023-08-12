@@ -1,48 +1,7 @@
-/* .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
-
-
-
 
 .master-body {
   display: flex;
-  background-color: #F6F8F6;
+  /* background-color: #F6F8F6; */
 }
 
 #root .profile-sidebar.MuiContainer-root {
@@ -114,7 +73,42 @@
 }
 
 
-
+/* Profile Page */
+.page-body-editprofile {
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  margin-top: 95px;
+  margin-left: 250px;
+  margin-right: 5%;
+  width: 85%;
+  overflow-y: auto;
+}
+.page-body-showprofile {
+  display: flex;
+  margin-top: 95px;
+  margin-left: 15%;
+  margin-right: 15%;
+  width: 90%;
+  border-radius: 10px;
+  border: 1px solid grey;
+  background-color: white;
+  padding: 30px;
+}
+.edit-profile {
+  border-radius: 10px;
+  margin: 5px;
+  border: 1px solid grey;
+  background-color: white;
+  padding: 30px;
+}
+.edit-resume {
+  border-radius: 10px;
+  margin: 5px;
+  border: 1px solid grey;
+  background-color: white;
+  padding: 30px;
+}
 /* Resume Style -Remove Defaults Later*/
 
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
@@ -137,6 +131,13 @@ input {
     border-radius: 3px;
     outline: none;
     border: 1px solid #ddd;
+}
+.input-textarea {
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  border-radius: 3px;
+  outline: none;
+  border: 1px solid #ddd;
 }
 h3 {
     margin: 15px 0;
@@ -169,10 +170,22 @@ button {
     justify-content: space-between;
     width: 100%;
 }
+.nestedContainer-exp {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+}
 .companies {
     display: flex;
     flex-direction: column;
     width: 39%;
+}
+.companies-description {
+  display: flex;
+  flex-direction: column;
+  width: 39%;
 }
 .currentInput {
     width: 95%;

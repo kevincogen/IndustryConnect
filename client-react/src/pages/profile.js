@@ -5,6 +5,8 @@ import { createProfile, updateProfile, getProfile } from "./profie-api";
 import LoginButton from "../components/buttons/login-button";
 import ProfileCard from "../components/partials/ProfileCard";
 import Sidebar from "../components/partials/ConnectSideBar";
+import ResumeForm from "../components/partials/resumeForm";
+import ResumeAI from "../components/partials/resumeAI";
 
 import {
   TextField,
@@ -163,210 +165,213 @@ return (
     
     <div className="master-body">
       {/* Sidebar */}
+
       {/* Main Body */}
-      <div className="page-body">
           {isEditMode ? (
-            <Container component="main" maxWidth="xs" direction="column">
-            <div>
-            <CssBaseline />
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <Avatar value={userProfile.profile_picture}></Avatar>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Typography component="h1" variant="h5" name={user?.name}>
-                  {user?.name}
-                </Typography>
-              </Grid>
-            </Grid>
-    
-            <form onSubmit={handleSubmit} noValidate>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    name="first_name"
-                    variant="standard"
-                    required
-                    id="firstName"
-                    helperText="First Name"
-                    placeholder={userProfile.first_name || "First Name"}
-                    value={formData.first_name}
-                    onChange={handleChange}
-                  />
+            <div className="page-body-editprofile">
+              <div className="edit-profile">
+                <Container component="main" direction="column">
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <Avatar value={userProfile.profile_picture}></Avatar>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography component="h1" variant="h5" name={user?.name}>
+                      {user?.name}
+                    </Typography>
+                  </Grid>
                 </Grid>
-    
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    variant="standard"
-                    required
-                    id="lastName"
-                    helperText="Last Name"
-                    name="last_name"
-                    placeholder={userProfile.last_name || "Last Name"}
-                    value={formData.last_name}
-                    onChange={handleChange}
-                  />
-                </Grid>
-    
-                <Grid item xs={12}>
-                  <TextField
-                    multiline
-                    variant="standard"
-                    name="bio"
-                    helperText="Please write a short bio describing yourself to potential connections"
-                    type="text"
-                    id="bio"
-                    placeholder={userProfile.bio || "Short Bio"}
-                    value={formData.bio}
-                    onChange={handleChange}
-                  />
-                </Grid>
-    
-                <Grid item xs={12}>
-                  <TextField
-                    variant="standard"
-                    required
-                    id="email"
-                    helperText="Email Address"
-                    name="email"
-                    placeholder={userProfile.email || "Email Address"}
-                    value={formData.email}
-                    onChange={handleChange}
-                  />
-                </Grid>
-    
-                <Grid item xs={12}>
-                  <TextField
-                    variant="standard"
-                    name="industry"
-                    helperText="Industry"
-                    type="text"
-                    id="industry"
-                    placeholder={userProfile.industry || "Industry"}
-                    value={formData.industry}
-                    onChange={handleChange}
-                  />
-                </Grid>
-    
-                <Grid item xs={12}>
-                  <TextField
-                    variant="standard"
-                    name="experience"
-                    helperText="Professional Title"
-                    type="text"
-                    id="experience"
-                    placeholder={userProfile.experience || "Professional Title"}
-                    value={formData.experience}
-                    onChange={handleChange}
-                  />
-                </Grid>
-    
-                <Grid item xs={12}>
-                  <TextField
-                    variant="standard"
-                    name="education"
-                    helperText="Education"
-                    type="text"
-                    id="education"
-                    placeholder={userProfile.education || "Education"}
-                    value={formData.education}
-                    onChange={handleChange}
-                  />
-                </Grid>
-    
-                <Grid item xs={12}>
-                  <TextField
-                    variant="standard"
-                    name="linkedin"
-                    helperText="Linkedin URL"
-                    type="text"
-                    id="Linkedin"
-                    placeholder={userProfile.linkedin || "Linkedin URL"}
-                    value={formData.linkedin}
-                    onChange={handleChange}
-                  />
-                </Grid>
-                
-                <Grid item xs={12}>
-                  <TextField
-                    variant="standard"
-                    name="twitter"
-                    helperText="Twitter URL"
-                    type="text"
-                    id="Twitter"
-                    placeholder={userProfile.twitter || "Twitter Handle"}
-                    value={formData.twitter}
-                    onChange={handleChange}
-                  />
-                </Grid>
-    
-                <Grid item xs={12}>
-                  <TextField
-                    variant="standard"
-                    name="github"
-                    helperText="Github URL"
-                    type="text"
-                    id="Linkedin"
-                    placeholder={userProfile.github || "Github URL"}
-                    value={formData.github}
-                    onChange={handleChange}
-                  />
-                </Grid>
-    
-                <Grid item xs={12}>
-                  <TextField
-                    variant="standard"
-                    name="facebook"
-                    helperText="Facebook URL"
-                    type="text"
-                    id="Facebook"
-                    placeholder={userProfile.facebook || "Facebook URL"}
-                    value={formData.facebook}
-                    onChange={handleChange}
-                  />
-                </Grid>
-    
-                <Grid item xs={12}>
-                  <TextField
-                    variant="standard"
-                    name="website"
-                    helperText="Website URL"
-                    type="text"
-                    id="Website"
-                    placeholder={userProfile.website || "Website URL"}
-                    value={formData.website}
-                    onChange={handleChange}
-                  />
-                </Grid>
-              </Grid>
-    
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <Button 
-                    type="submit" 
-                    variant="contained" 
-                    color="primary"
-                  >
-                    Update Profile
-                  </Button>
-                </Grid>
-    
-                <Grid item xs={12} sm={6}>
-                  <Button
-                    onClick={() =>
-                      logout({ logoutParams: { returnTo: window.location.origin } })
-                    }
-                  >
-                    Logout
-                  </Button>
-                </Grid>
-    
-              </Grid>
-            </form>
-        </div>  
-        </Container>
+        
+                <form onSubmit={handleSubmit} noValidate>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        name="first_name"
+                        variant="standard"
+                        required
+                        id="firstName"
+                        helperText="First Name"
+                        placeholder={userProfile.first_name || "First Name"}
+                        value={formData.first_name}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+        
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        variant="standard"
+                        required
+                        id="lastName"
+                        helperText="Last Name"
+                        name="last_name"
+                        placeholder={userProfile.last_name || "Last Name"}
+                        value={formData.last_name}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+        
+                    <Grid item xs={12}>
+                      <TextField
+                        multiline
+                        variant="standard"
+                        name="bio"
+                        helperText="Please write a short bio describing yourself to potential connections"
+                        type="text"
+                        id="bio"
+                        placeholder={userProfile.bio || "Short Bio"}
+                        value={formData.bio}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+        
+                    <Grid item xs={12}>
+                      <TextField
+                        variant="standard"
+                        required
+                        id="email"
+                        helperText="Email Address"
+                        name="email"
+                        placeholder={userProfile.email || "Email Address"}
+                        value={formData.email}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+        
+                    <Grid item xs={12}>
+                      <TextField
+                        variant="standard"
+                        name="industry"
+                        helperText="Industry"
+                        type="text"
+                        id="industry"
+                        placeholder={userProfile.industry || "Industry"}
+                        value={formData.industry}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+        
+                    <Grid item xs={12}>
+                      <TextField
+                        variant="standard"
+                        name="experience"
+                        helperText="Professional Title"
+                        type="text"
+                        id="experience"
+                        placeholder={userProfile.experience || "Professional Title"}
+                        value={formData.experience}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+        
+                    <Grid item xs={12}>
+                      <TextField
+                        variant="standard"
+                        name="education"
+                        helperText="Education"
+                        type="text"
+                        id="education"
+                        placeholder={userProfile.education || "Education"}
+                        value={formData.education}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+        
+                    <Grid item xs={12}>
+                      <TextField
+                        variant="standard"
+                        name="linkedin"
+                        helperText="Linkedin URL"
+                        type="text"
+                        id="Linkedin"
+                        placeholder={userProfile.linkedin || "Linkedin URL"}
+                        value={formData.linkedin}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+                    
+                    <Grid item xs={12}>
+                      <TextField
+                        variant="standard"
+                        name="twitter"
+                        helperText="Twitter URL"
+                        type="text"
+                        id="Twitter"
+                        placeholder={userProfile.twitter || "Twitter Handle"}
+                        value={formData.twitter}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+        
+                    <Grid item xs={12}>
+                      <TextField
+                        variant="standard"
+                        name="github"
+                        helperText="Github URL"
+                        type="text"
+                        id="Linkedin"
+                        placeholder={userProfile.github || "Github URL"}
+                        value={formData.github}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+        
+                    <Grid item xs={12}>
+                      <TextField
+                        variant="standard"
+                        name="facebook"
+                        helperText="Facebook URL"
+                        type="text"
+                        id="Facebook"
+                        placeholder={userProfile.facebook || "Facebook URL"}
+                        value={formData.facebook}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+        
+                    <Grid item xs={12}>
+                      <TextField
+                        variant="standard"
+                        name="website"
+                        helperText="Website URL"
+                        type="text"
+                        id="Website"
+                        placeholder={userProfile.website || "Website URL"}
+                        value={formData.website}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                      <Button 
+                        type="submit" 
+                        variant="contained" 
+                        color="primary"
+                      >
+                        Update Profile
+                      </Button>
+                    </Grid>
+        
+                    <Grid item xs={12} sm={6}>
+                      <Button
+                        onClick={() =>
+                          logout({ logoutParams: { returnTo: window.location.origin } })
+                        }
+                      >
+                        Logout
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </form>
+            </Container>
+        </div>
+        <div className="edit-resume">
+          <ResumeForm />
+        </div>
+        </div>
       ) : (
-          <Container component="main" maxWidth="lg" direction="column">
+        <div className="page-body-showprofile">
+            <Container component="main" maxWidth="lg" direction="column">
               <Grid container spacing={2}>
                 <Grid item xs={12} md={4}>
                   <Avatar src={userProfile.profile_picture} style={{ width: 200, height: 200 }} />
@@ -391,10 +396,9 @@ return (
                   {userProfile.facebook && <Typography paragraph><a href={userProfile.facebook} target="_blank" rel="noopener noreferrer">Facebook</a></Typography>}
                   {userProfile.website && <Typography paragraph><a href={userProfile.website} target="_blank" rel="noopener noreferrer">Website</a></Typography>}
                 </Grid>
-              </Grid>
-            </Container>
-      )}
-          <Grid container spacing={2}>
+              </Grid>  
+              <ResumeForm />
+              <Grid container spacing={2}>
             {userProfile.authentication_id && userProfile.created_at && (
               <Grid item xs={12} sm={6}>
                 <Button onClick={toggleEditMode}>
@@ -413,7 +417,9 @@ return (
             </Grid>
           </Grid>
         <LoginButton />
-      </div>
+        </Container>
+        </div>
+      )}
     </div>
   </>
 );
