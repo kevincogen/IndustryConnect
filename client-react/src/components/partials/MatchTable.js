@@ -35,7 +35,7 @@ export default function MatchList({currentUser, refreshMatches }) {
     navigate('/chat', { state: { match, currentUserId } }); // Pass the match object and currentUserId as state
   }, [navigate, currentUserId]);
 
-
+  
   const updateRating = async (ratedUserId, newValue) => {
     // console.log("ratedUserId: ", ratedUserId);
     // console.log("currentUserId: ", currentUserId);
@@ -46,6 +46,18 @@ export default function MatchList({currentUser, refreshMatches }) {
         raterId: currentUserId,
         rating: newValue
       });
+      console.log("Rating updated successfully");
+      setMatches((prevMatches) =>
+      prevMatches.map((match) =>
+        match.id === ratedUserId
+          ? {
+              ...match,
+              average_rating: newValue,
+            }
+          : match
+      )
+    );
+
     } catch (error) {
       console.error("There was an error updating the rating: ", error);
     }
@@ -55,6 +67,7 @@ export default function MatchList({currentUser, refreshMatches }) {
     const getMatchList = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/api/matchList/${currentUserId}`);
+        console.log("response.data: ", response.data);
         setMatches(response.data);
       } catch (error) {
         console.error("There was an error retrieving the matches: ", error);
@@ -84,7 +97,7 @@ return (
                   style={{ marginTop: '-10px', marginLeft: '14px' }}
                   name={`rating-${index}`}
                   size="small"
-                  value={match.rating}
+                  value={match.average_rating}
                   onChange={(event, newValue) => {
                     if (newValue !== null) {
                       updateRating(match.id, newValue);
