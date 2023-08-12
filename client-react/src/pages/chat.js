@@ -55,8 +55,18 @@ export default function Chat() {
     };
   }, [match]);
 
+  const chatBubbles = document.querySelectorAll('.chat-bubble');
+
+  useEffect(() => {
+    if (chatBubbles.length > 0) {
+      const latestMessage = chatBubbles[chatBubbles.length - 1];
+      latestMessage.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [chatBubbles.length, chatHistory])
+
   const handleSubmit = (event) => {
     event.preventDefault();
+
     //organize message data
     const message = event.target.elements.message.value;
     const sender_id = currentUserId;
@@ -66,6 +76,7 @@ export default function Chat() {
     
     const socket = io("http://localhost:3000");
     socket.emit("chat message", msg);
+   
     event.target.reset();
   };
 
@@ -122,9 +133,9 @@ export default function Chat() {
               <Grid item xs={12} style={{ flex: 1 }}>
                 {match ? (
                   <OuterChatContainer>
-                    <ChatHistoryContainer className='no-scrollbar'>
+                    <ChatHistoryContainer className='no-scrollbar chat-history-container'>
                       {chatHistory.map((message, index) => (
-                        <ChatBubble key={index} isCurrentUser={message.sender_id === currentUserId}>
+                        <ChatBubble className="chat-bubble" key={index} isCurrentUser={message.sender_id === currentUserId}>
                           <span>{message.message}</span>
                           <Timestamp isCurrentUser={message.sender_id === currentUserId}>
                             {formatTimestamp(message.created_at)}
