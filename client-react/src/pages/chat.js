@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import { io } from "socket.io-client";
 import { Grid, Typography } from '@mui/material';
-import { ChatHistoryContainer, ChatBubble, Timestamp, FormContainer, InputField, SendButton } from '../pages/chat-styles';
+import { OuterChatContainer, ChatHistoryContainer, ChatBubble, Timestamp, FormContainer, InputField, SendButton } from '../pages/chat-styles';
+import '../App.css';
 import moment from 'moment';
 import axios from 'axios';
 import useGetCurrentUser from '../hooks/useGetCurrentUser';
 import Sidebar from '../components/partials/ConnectSideBar';
+import Navbar from '../components/partials/navbar';
+import ChatAnimation from '../animations/chatAnimation';
 
 
 const formatTimestamp = (timestamp) => {
@@ -86,59 +89,78 @@ export default function Chat() {
     console.log("currentUser is null")
     return <div>Loading...</div>;
   } 
-  
+
   return (
-    <>
-      { currentUser && (
-        <div style={{ display: 'flex', height: '100vh' }}>
-        <Sidebar currentUser={currentUser[0][0]} refreshMatches={refreshMatches}/>
-        <div style={{ flex: 1, padding: '16px', overflowY: 'auto' }}>
-       <Grid container spacing={2}>
-         <Grid item xs={12}>
-           <Typography variant="h4" component="h1" gutterBottom>
-             Chat
-           </Typography>
-         </Grid>
-
-         <Grid item xs={12}>
-           <Typography variant="h5" component="h2" gutterBottom>
-             {match?.first_name || null} {match?.last_name || null}
-           </Typography>
-         </Grid>
-
-         <Grid item xs={12}>
-            <Typography variant="h6" component="h3" gutterBottom>
-              Chat History
-            </Typography>
-            <ChatHistoryContainer>
-            {chatHistory.map((message, index) => (
-              <ChatBubble key={index} isCurrentUser={message.sender_id === currentUserId}>
-                <span>{message.message}</span>
-                <Timestamp isCurrentUser={message.sender_id === currentUserId}>
-                  {formatTimestamp(message.created_at)}
-                </Timestamp>
-              </ChatBubble>
-            ))}
-            </ChatHistoryContainer>
-        </Grid>
-        <FormContainer onSubmit={handleSubmit}>
-          <InputField
-            id="outlined-multiline-static"
-            label="Message"
-            multiline
-            variant="outlined"
-            name="message"
-          />
-          <SendButton type="submit" variant="contained" color="primary">
-            Send
-          </SendButton>
-        </FormContainer>
-       </Grid>
-       </div>
-       </div>
-    ) 
-  }
-  </>
+    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Navbar />
+      {currentUser ? (
+        <div style={{ display: 'flex', flex: 1 }}>
+          <Sidebar currentUser={currentUser[0][0]} refreshMatches={refreshMatches} />
+          <div style={{ flex: 1, padding: '16px', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="h4" component="h1" gutterBottom>
+                  Chat
+                </Typography>
+              </Grid>
+  
+              <Grid item xs={12}>
+                {match ? (
+                  <Typography variant="h5" component="h2" gutterBottom style={{ color: '#7E8C9C' }}>
+                    Your conversation with {match?.first_name || null} {match?.last_name || null}
+                  </Typography>
+                ) : (
+                  <>
+                  <Typography variant="h5" component="h2" gutterBottom style={{ color: '#7E8C9C' }}>
+                    Please select a match to chat with
+                  </Typography>
+                  <ChatAnimation />
+                  </>
+                )}
+              </Grid>
+  
+              <Grid item xs={12} style={{ flex: 1 }}>
+                {match ? (
+                  <OuterChatContainer>
+                    <ChatHistoryContainer className='no-scrollbar'>
+                      {chatHistory.map((message, index) => (
+                        <ChatBubble key={index} isCurrentUser={message.sender_id === currentUserId}>
+                          <span>{message.message}</span>
+                          <Timestamp isCurrentUser={message.sender_id === currentUserId}>
+                            {formatTimestamp(message.created_at)}
+                          </Timestamp>
+                        </ChatBubble>
+                      ))}
+                    </ChatHistoryContainer>
+                    
+                    {match && (
+                      <FormContainer onSubmit={handleSubmit} style={{ display: 'flex', alignItems: 'center' }}>
+                        <InputField
+                          id="outlined-multiline-static"
+                          label="Message"
+                          multiline
+                          variant="outlined"
+                          name="message"
+                          style={{ flex: 1 }}
+                        />
+                        <SendButton type="submit" variant="contained" color="primary">
+                          Send
+                        </SendButton>
+                      </FormContainer>
+                    )}
+                  </OuterChatContainer>
+                ) : null}
+              </Grid>
+            </Grid>
+          </div>
+        </div>
+      ) : (
+        <Typography variant="h4" component="h1" gutterBottom>
+          Please select a match to chat with
+        </Typography>
+      )}
+    </div>
   );
+  
 }
 
