@@ -1,13 +1,25 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Box from '@mui/material/Box';
+// import Box from '@mui/material/Box';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import axios from 'axios';
+// import ListItem from '@mui/material/ListItem';
+// import ListItemButton from '@mui/material/ListItemButton';
+// import ListItemText from '@mui/material/ListItemText';
+// import ListItemAvatar from '@mui/material/ListItemAvatar';
+// import Avatar from '@mui/material/Avatar';
 import Rating from '@mui/material/Rating';
-// import Typography from '@mui/material/Typography';
+// import { styled } from '@mui/material/styles';
+import {
+  StyledListItem,
+  StyledAvatar,
+  AvatarContainer,
+  AvatarAndNameContainer,
+  StyledListItemText,
+  StyledListItemButton,
+  RatingAndChatContainer,
+  StyledBox,
+} from '../partials/MatchTable-styles';
+import axios from 'axios';
 
 
 
@@ -51,33 +63,41 @@ export default function MatchList({currentUser, refreshMatches }) {
     getMatchList();
   }, [currentUserId, refreshMatches]);
 
-  return (
-    <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      <nav aria-label="main mailbox folders">
-        <List>
-          {matches?.map((match, index) => (
-            <ListItem disablePadding key={index}>
-              <ListItemButton>
-                <ListItemText primary={`${match.first_name} ${match.last_name}`} />
-              </ListItemButton>
-              <ListItemButton onClick={() => handleChatClick(match)}>
-                <ListItemText primary={`Chat with ${match.first_name}`} />
-              </ListItemButton>
-              <Rating
-                name={`simple-controlled-${index}`}
-                size="small"
-                value={match.rating}
-                onChange={(event, newValue) => {
-                  if (newValue !== null) {
-                    updateRating(match.id, newValue);
-                  }
-                }}
-              />
-            </ListItem>
-          ))}
-        </List>
-      </nav>
-    </Box>
-  );
+
+
+
+return (
+  <StyledBox sx={{ width: '100%', bgcolor: 'background.paper' }}>
+    <nav aria-label="main mailbox folders">
+      <List>
+        {matches?.map((match, index) => (
+          <StyledListItem disablePadding key={index}>
+            <AvatarAndNameContainer>
+              <AvatarContainer>
+                <StyledAvatar alt={match.first_name} src={match.profile_picture} />
+              </AvatarContainer>
+            <RatingAndChatContainer>
+              <StyledListItemButton onClick={() => handleChatClick(match)}>
+                <StyledListItemText primary={`Chat with ${match.first_name}`} />
+              </StyledListItemButton>
+                <Rating
+                  style={{ marginTop: '-10px', marginLeft: '14px' }}
+                  name={`rating-${index}`}
+                  size="small"
+                  value={match.rating}
+                  onChange={(event, newValue) => {
+                    if (newValue !== null) {
+                      updateRating(match.id, newValue);
+                    }
+                  }}
+                />
+            </RatingAndChatContainer>
+            </AvatarAndNameContainer>
+          </StyledListItem>
+        ))}
+      </List>
+    </nav>
+  </StyledBox>
+);
 }
 

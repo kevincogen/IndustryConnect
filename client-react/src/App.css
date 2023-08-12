@@ -110,3 +110,14 @@
   justify-content: space-evenly;
   margin-top: 40px;
 }
+
+
+/* for the chat container to remove the scrollbar */
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer and Microsoft Edge */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  width: 0; /* Safari and Google Chrome */
+}
