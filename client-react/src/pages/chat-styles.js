@@ -5,7 +5,7 @@ import { Grid, Button, TextField } from '@mui/material';
 
 const OuterChatContainer = styled('div')((theme) => ({
   marginRight: '20px',
-  marginLeft: '20px',
+  marginLeft: '10px',
   borderRadius: '16px', 
   backgroundColor: 'white', 
   padding: '16px', 
