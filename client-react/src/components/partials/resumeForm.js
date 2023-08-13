@@ -3,8 +3,8 @@ import Loading from "./Loading";
 import axios from "axios";
 import ResumeAI from "./resumeAI";
 
-const ResumeForm = () => {
-  const [fullName, setFullName] = useState("");
+const ResumeForm = ({profileName}) => {
+  const [fullName, setFullName] = useState(profileName || "");
   const [currentPosition, setCurrentPosition] = useState("");
   const [currentLength, setCurrentLength] = useState("");
   const [currentTechnologies, setCurrentTechnologies] = useState("");
@@ -63,6 +63,12 @@ setLoading(true);
   return (
     <div className="resume-form">
         <h1>AI Powered CV Builder</h1>
+        {result && Object.keys(result).length > 0  ? (
+          <div className="resume-AI">
+          <ResumeAI result={result} />
+          <button onClick={() => setResult({})}>Redo CV Build</button>
+          </div>
+        ) : (
         <form
           onSubmit={handleFormSubmit}
           method='POST'
@@ -170,7 +176,7 @@ setLoading(true);
           </div>
           <button>CREATE RESUME</button>
         </form>
-        {result && <ResumeAI result={result}/>}
+        )}
     </div>
   )
 };

@@ -366,7 +366,7 @@ return (
             </Container>
         </div>
         <div className="edit-resume">
-          <ResumeForm />
+        <ResumeForm profileName={`${userProfile.first_name} ${userProfile.last_name}`} />
         </div>
         </div>
       ) : (
@@ -397,7 +397,6 @@ return (
                   {userProfile.website && <Typography paragraph><a href={userProfile.website} target="_blank" rel="noopener noreferrer">Website</a></Typography>}
                 </Grid>
               </Grid>  
-              <ResumeForm />
               <Grid container spacing={2}>
             {userProfile.authentication_id && userProfile.created_at && (
               <Grid item xs={12} sm={6}>

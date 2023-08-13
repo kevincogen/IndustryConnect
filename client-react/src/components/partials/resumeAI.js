@@ -1,6 +1,7 @@
 import ErrorPage from "./ErrorPage";
 
 const ResumeAI = ({result}) => {
+console.log("Rendering ResumeAI component with result: ", result);
 //👇🏻 function that replaces the new line with a break tag
 const replaceWithBr = (string) => {
     if (typeof string !== "string") return "";
@@ -16,7 +17,6 @@ const handlePrint = () => alert("Printing");
 
 return (
   <>
-      <button onClick={handlePrint}>Print Page</button>
       <main className='container'>
           <header className='header'>
               <div>
@@ -44,13 +44,16 @@ return (
                   {result.pastExperience.map((work, index) => (
                     <div key={index} className='workHistoryItem'>
                         <h3>{work.company} - {work.position}</h3>
-                      <p className='workHistoryDescription'>
-                            {work.description}
-                      </p>
+                        <p 
+                            className='workHistoryDescription'
+                            dangerouslySetInnerHTML={{
+                            __html: replaceWithBr(work.description),
+                            }}
+                        />
                     </div>
                   ))}
               </div>
-              <div>
+              {/* <div>
                   <h2 className='resumeBodyTitle'>JOB PROFILE</h2>
                   <p
                       dangerouslySetInnerHTML={{
@@ -58,9 +61,9 @@ return (
                       }}
                       className='resumeBodyContent'
                   />
-              </div>
+              </div> */}
               <div>
-                  <h2 className='resumeBodyTitle'>JOB RESPONSIBILITIES</h2>
+                  <h2 className='resumeBodyTitle'>KEY RESPONSIBILITIES</h2>
                   <p
                       dangerouslySetInnerHTML={{
                           __html: replaceWithBr(result.keypoints),

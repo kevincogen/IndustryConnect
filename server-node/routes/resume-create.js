@@ -62,11 +62,11 @@ const prompt1 = `I am writing a resume, my details are \n name: ${fullName} \n r
 //👇🏻 The job responsibilities prompt
 const prompt2 = `I am writing a resume, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n I write in the technolegies: ${currentTechnologies}. Can you write 4 concise points for a resume on what I am good at?`;
 //👇🏻 The job achievements prompt
-const prompt3 = `I am writing a resume and require a specific format for my work history. For each company I've worked at, the format should be: the company name on its own line, followed immediately by three bullet points detailing my roles and achievements at that company. If the description I've provided for a role is less than ideal, please either improve upon it or create solid, industry-standard bullet points highlighting the achievements and responsibilities of that job. In total, this means 4 lines for each company: one for the company name and three for the bullet points. Here are my details:
+const prompt3 = `I am writing a resume and require a specific format for my work history. For each company I've worked at, the format should be: the company name must be separate on it's own line, followed immediately by three bullet points detailing my roles and achievements at that company, which must each be on its own line. If the description I've provided for a role is less than ideal, please either improve upon it or create solid, industry-standard bullet points highlighting the achievements and responsibilities of that job. In total, this means 4 lines for each company: one for the company name and three for the bullet points. Here are my details:
 \n name: ${fullName}
 \n role: ${currentPosition} (${currentLength} years).
 \n During these years, I worked at ${workArray.length} companies. ${remainderText()}
-\n Please write these points in the first person and adhere strictly to the aforementioned format.`;
+\n Please write these points in the first person and adhere strictly to the aforementioned format: company name alone on one line, followed by three bullet points, each on its own line - it must always be this format. The company name should always match the given company name, do not change any character due to spelling, ect.`;
 
 
 
@@ -76,7 +76,7 @@ const parseGPTResponseForWorkHistory = (text) => {
 
   for (let i = 0; i < lines.length; i += 4) {
     results.push({
-      company: lines[i],
+      company: lines[i].replace(':', '').trim(),
       descriptionPoints: [
         lines[i + 1],
         lines[i + 2],
