@@ -165,9 +165,6 @@ return (
     <Navbar />
     
     <div className="master-body">
-      {/* Sidebar */}
-
-      {/* Main Body */}
           {isEditMode ? (
             <div className="page-body-editprofile">
               <div className="edit-profile">
@@ -367,7 +364,7 @@ return (
             </Container>
         </div>
         <div className="edit-resume">
-        <ResumeForm profileName={`${userProfile.first_name} ${userProfile.last_name}`} userId={userProfile.id}/>
+        <ResumeForm profileName={`${userProfile.first_name} ${userProfile.last_name}`} userId={userProfile.id} isProfileShow={true}/>
         </div>
         </div>
       ) : (
@@ -397,7 +394,7 @@ return (
                   {userProfile.facebook && <Typography paragraph><a href={userProfile.facebook} target="_blank" rel="noopener noreferrer">Facebook</a></Typography>}
                   {userProfile.website && <Typography paragraph><a href={userProfile.website} target="_blank" rel="noopener noreferrer">Website</a></Typography>}
                 </Grid>
-                {(userProfile.resumeai && (userProfile.resumeai !== {}) ) && <ResumeAI result={userProfile?.resumeai}/>}
+                {(userProfile.resumeai && (userProfile.resumeai !== {}) ) && <ResumeAI result={userProfile?.resumeai} isProfileShow={true}/>}
               </Grid>  
               <Grid container spacing={2}>
             {userProfile.authentication_id && userProfile.created_at && (

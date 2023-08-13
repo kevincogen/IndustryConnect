@@ -1,7 +1,8 @@
 import ErrorPage from "./ErrorPage";
 
-const ResumeAI = ({result}) => {
+const ResumeAI = ({ result, isProfileShow }) => {
 console.log("Rendering ResumeAI component with result: ", result);
+console.log("in resume AI", isProfileShow)
 //👇🏻 function that replaces the new line with a break tag
 const replaceWithBr = (string) => {
     if (typeof string !== "string") return "";
@@ -20,7 +21,7 @@ return (
       <main className='container'>
           <header className='header'>
               <div>
-                  <h1>{result.fullName}</h1>
+                  {!isProfileShow && <h1>{result.fullName}</h1>}
                   <p className='resumeTitle headerTitle'>
                       {result.currentPosition} ({result.currentTechnologies})
                   </p>
