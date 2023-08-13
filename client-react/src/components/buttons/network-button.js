@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 
 const NetworkButton = ({ onClick, children }) => {
   return (
-    <Button sx={"background-color: #65adb2"} variant="contained" onClick={onClick} size="small"> 
+    <Button sx={"background-color: #1fc1c3"} variant="contained" onClick={onClick} size="small"> 
       {children}
     </Button>
   );

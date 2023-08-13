@@ -16,6 +16,8 @@ import LogoutButton from '../buttons/logout-button';
 import { Link } from 'react-router-dom';
 import SearchBar from './searchbar';
 import NetworkButton from '../buttons/network-button';
+import logoImage from '../../images/logo.png'
+
 
 
 const pages = ['Profile', 'Connect', 'Chat'];
@@ -44,24 +46,15 @@ function ResponsiveAppBar({ showSearch, industries, selectedIndustries, setSelec
     <AppBar position="fixed" sx={{backgroundColor: '#13264D'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            INDUSTRYCONNECT
-          </Typography>
+        <img
+          src={logoImage}
+          alt="Logo"
+          style={{
+            maxWidth: '250px', // Adjust the size of the logo as needed
+            marginRight: '10%', // Add some spacing if necessary
+            display: { xs: 'flex', md: 'none' },
+          }}
+        />
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton

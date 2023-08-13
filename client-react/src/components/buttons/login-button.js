@@ -7,7 +7,13 @@ const LoginButton = () => {
 
   return (
     <Button 
-      sx={"background-color: #65adb2"} 
+    size="large"
+    sx={{
+      backgroundColor: "#1fc1c3",
+      "&:hover": {
+        backgroundColor: "#13264D",
+      },
+    }} 
       variant="contained" 
       onClick={() => loginWithRedirect({
         redirectUri: `${window.location.origin}/profile`

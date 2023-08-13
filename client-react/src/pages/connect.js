@@ -10,6 +10,7 @@ import ProfileCarousel from '../components/partials/ProfileCarousel';
 import ProfileGrid from '../components/partials/ProfileGrid';
 import Sidebar from '../components/partials/ConnectSideBar';
 import { Box } from '@mui/material';
+import PageLoad from '../animations/pageLoad';
 
 
 const Connect = () => {
@@ -80,7 +81,12 @@ const Connect = () => {
   };
   
   if (currentUser === null) {
-    return <div>Loading...</div>;
+    return (
+     <div> 
+    <Navbar />  
+    <PageLoad />
+    </div>
+    )
   }
 
   return (
