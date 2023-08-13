@@ -20,6 +20,7 @@ CREATE TABLE users (
   connections INTEGER[],
   passes INTEGER[],
   average_rating FLOAT,
+  resumeAI JSONB DEFAULT '{}'::jsonb,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );

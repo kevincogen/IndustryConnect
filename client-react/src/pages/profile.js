@@ -91,6 +91,7 @@ const Profile = () => {
   }, [isLoading, user]);
 
   //Edit Mode/Presentation Mode 
+  console.log("is id here?", userProfile)
 
   const [isEditMode, setIsEditMode] = useState(false)
   const toggleEditMode = () => {
@@ -366,7 +367,7 @@ return (
             </Container>
         </div>
         <div className="edit-resume">
-        <ResumeForm profileName={`${userProfile.first_name} ${userProfile.last_name}`} />
+        <ResumeForm profileName={`${userProfile.first_name} ${userProfile.last_name}`} userId={userProfile.id}/>
         </div>
         </div>
       ) : (
@@ -396,6 +397,7 @@ return (
                   {userProfile.facebook && <Typography paragraph><a href={userProfile.facebook} target="_blank" rel="noopener noreferrer">Facebook</a></Typography>}
                   {userProfile.website && <Typography paragraph><a href={userProfile.website} target="_blank" rel="noopener noreferrer">Website</a></Typography>}
                 </Grid>
+                {(userProfile.resumeai && (userProfile.resumeai !== {}) ) && <ResumeAI result={userProfile?.resumeai}/>}
               </Grid>  
               <Grid container spacing={2}>
             {userProfile.authentication_id && userProfile.created_at && (

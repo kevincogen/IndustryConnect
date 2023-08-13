@@ -46,15 +46,20 @@ router.post('/register', async (req, res) => {
 
 // Update user profile
 router.put('/update', async (req, res) => {
-  const { authentication_id } = req.body;
+  const { authentication_id, resumeAI, ...bodyWithoutResumeAI } = req.body;
 
   if (!authentication_id) {
     return res.status(400).json({ error: 'authentication_id is required' });
   }
 
-  try {
-    const updatedUser = await userQueries.updateUserProfile(req.body);
+  // Add authentication_id back to the data
+  const updatedData = {
+    ...bodyWithoutResumeAI,
+    authentication_id
+  };
 
+  try {
+    const updatedUser = await userQueries.updateUserProfile(updatedData);
 
     if(updatedUser) {
       res.status(200).json(updatedUser);
@@ -66,6 +71,7 @@ router.put('/update', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 
 

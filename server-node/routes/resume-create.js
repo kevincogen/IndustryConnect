@@ -28,13 +28,13 @@ const GPTFunction = async (text) => {
 let database = [];
 router.post("/", async (req, res) => {
   const {
+      userId,
       fullName,
       currentPosition,
       currentLength,
       currentTechnologies,
       pastExperience,
   } = req.body;
-
   const workArray = pastExperience
   console.log(req.body);
 
@@ -132,7 +132,15 @@ const data = { ...newEntry, ...chatgptData };
 database.push(data);
 console.log(data)
 
+try {
 
+  // SQL query to update the user's table
+  await db.query('UPDATE users SET resumeai = $1 WHERE id = $2', [JSON.stringify(data), userId]);
+  console.log(` ${JSON.stringify(data)} gpt resume added to user profile ${userId}`)
+} catch (error) {
+  console.error("Error updating user's resumeAI:", error.message);
+  return res.status(500).json({ message: "Failed to update user's profile." });
+}
 
 res.json({
     message: "Request processed!",

@@ -45,7 +45,7 @@ const getUserProfileByAuthenticationId = async (authenticationId) => {
   try {
     const query = {
       // select everything fromt the user object except the update_at
-      text: 'SELECT first_name, last_name, email, bio, education, experience, industry, linkedin, twitter, github, facebook, website, authentication_id, created_at FROM users WHERE authentication_id = $1',
+      text: 'SELECT id, first_name, last_name, email, bio, education, experience, industry, linkedin, twitter, github, facebook, website, authentication_id, resumeai, created_at FROM users WHERE authentication_id = $1',
       values: [authenticationId],
     };
     const { rows } = await db.query(query);

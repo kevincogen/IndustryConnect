@@ -3,7 +3,7 @@ import Loading from "./Loading";
 import axios from "axios";
 import ResumeAI from "./resumeAI";
 
-const ResumeForm = ({profileName}) => {
+const ResumeForm = ({profileName, userId}) => {
   const [fullName, setFullName] = useState(profileName || "");
   const [currentPosition, setCurrentPosition] = useState("");
   const [currentLength, setCurrentLength] = useState("");
@@ -16,6 +16,7 @@ const ResumeForm = ({profileName}) => {
     e.preventDefault();
 
     const payload = {
+      userId,
       fullName,
       currentPosition,
       currentLength,
