@@ -62,6 +62,10 @@ const Profile = () => {
         try {
           // Fetch user profile from API
           const userProfileData = await getProfile(user.sub);
+          // If userProfileData indicates no profile exists in the DB
+            if (!userProfileData) {
+            setIsEditMode(true); // Activate edit mode
+        }
           // Fetch user info from the endpoint
           const userInfoResponse = await fetch(
             `/api/users/profile?authentication_id=${user.sub}`
@@ -91,7 +95,6 @@ const Profile = () => {
   }, [isLoading, user]);
 
   //Edit Mode/Presentation Mode 
-  console.log("is id here?", userProfile)
 
   const [isEditMode, setIsEditMode] = useState(false)
   const toggleEditMode = () => {
@@ -136,6 +139,8 @@ const Profile = () => {
     try {
       if (userProfile.authentication_id && !userProfile.created_at) {
         // New profile is being created
+        setIsEditMode(true);
+        console.log("newUser")
         const newUserProfile = await createProfile({
           ...values,
           authentication_id: userProfile.authentication_id,
@@ -414,7 +419,6 @@ return (
               </Button>
             </Grid>
           </Grid>
-        <LoginButton />
         </Container>
         </div>
       )}

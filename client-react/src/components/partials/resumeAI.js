@@ -54,15 +54,6 @@ return (
                     </div>
                   ))}
               </div>
-              {/* <div>
-                  <h2 className='resumeBodyTitle'>JOB PROFILE</h2>
-                  <p
-                      dangerouslySetInnerHTML={{
-                          __html: replaceWithBr(result.jobResponsibilities),
-                      }}
-                      className='resumeBodyContent'
-                  />
-              </div> */}
               <div>
                   <h2 className='resumeBodyTitle'>KEY RESPONSIBILITIES</h2>
                   <p
