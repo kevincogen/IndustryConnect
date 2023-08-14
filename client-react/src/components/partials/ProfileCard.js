@@ -5,7 +5,7 @@ import TinderCard from 'react-tinder-card'
 import Rating from '@mui/material/Rating';
 
 
-function ProfileCard({ carousel, profile, connection, currentUser }) {
+function ProfileCard({ carousel, profile, connection, currentUser, sideBarStyle }) {
 
   // Check if profile or necessary keys are undefined or null
   if (!profile || !profile.first_name || !profile.last_name) {
@@ -13,15 +13,20 @@ function ProfileCard({ carousel, profile, connection, currentUser }) {
     return <div>Profile not available</div>;
   }
 
-  const cardStyle = {
+  const defaultStyle = {
     maxWidth: 345,
     borderRadius: '10px',
     boxShadow: '2px 2px 4px lightgrey',
     backgroundColor: "#F6F8F6",
   };
 
+  const sidebarCardStyle = {
+    ...defaultStyle,
+    backgroundColor: "white",
+  };
+
   return (
-    <Card sx={cardStyle}>
+    <Card sx={sideBarStyle ? sidebarCardStyle : defaultStyle}>
       <CardMedia
         sx={{ height: 140 }}
         image={profile.profile_picture || "default-image.jpg"} // Fallback image if undefined

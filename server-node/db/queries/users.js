@@ -45,7 +45,7 @@ const getUserProfileByAuthenticationId = async (authenticationId) => {
   try {
     const query = {
       // select everything fromt the user object except the update_at
-      text: 'SELECT id, first_name, last_name, email, bio, education, experience, industry, linkedin, twitter, github, facebook, website, authentication_id, resumeai, created_at FROM users WHERE authentication_id = $1',
+      text: 'SELECT id, first_name, last_name, profile_picture, email, bio, education, experience, industry, linkedin, twitter, github, facebook, website, authentication_id, resumeai, created_at FROM users WHERE authentication_id = $1',
       values: [authenticationId],
     };
     const { rows } = await db.query(query);
@@ -59,13 +59,18 @@ const getUserProfileByAuthenticationId = async (authenticationId) => {
 
 const updateUserProfile = async (userData) => {
   try {
-    const { authentication_id, ...fieldsToUpdate } = userData;
+    const { authentication_id, profile_picture, ...fieldsToUpdate } = userData;
+
     // Arrays to store field names and their corresponding values dynamically.
     const fieldNames = [];
     const values = [];
+
     for (const fieldName in fieldsToUpdate) {
-      fieldNames.push(fieldName);
-      values.push(fieldsToUpdate[fieldName]);
+      // Check to ensure you don't include profile_picture, even if it's present in userData
+      if (fieldName !== 'profile_picture') {
+        fieldNames.push(fieldName);
+        values.push(fieldsToUpdate[fieldName]);
+      }
     }
 
     values.push(authentication_id);
@@ -83,7 +88,6 @@ const updateUserProfile = async (userData) => {
     };
 
     const { rows } = await db.query(query);
-    console.log(rows)
     return rows[0];
 
   } catch (err) {
@@ -91,6 +95,7 @@ const updateUserProfile = async (userData) => {
     throw new Error('Internal Server Error');
   }
 };
+
 
 
 module.exports = {

@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom';
 import SearchBar from './searchbar';
 import NetworkButton from '../buttons/network-button';
 import logoImage from '../../images/logo.png'
+import { useAuth0 } from '@auth0/auth0-react'; 
 
 
 
@@ -24,6 +25,7 @@ const pages = ['Profile', 'Connect', 'Chat'];
 const settings = ['Profile', 'Connect', 'Chat', 'Logout'];
 
 function ResponsiveAppBar({ showSearch, industries, selectedIndustries, setSelectedIndustries, filterProfilesByIndustry }) {
+  const { logout } = useAuth0();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -43,19 +45,19 @@ function ResponsiveAppBar({ showSearch, industries, selectedIndustries, setSelec
   };
 
   return (
-    <AppBar position="fixed" sx={{backgroundColor: '#13264D'}}>
+    <AppBar position="fixed" sx={{ backgroundColor: '#13264D' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-        <img
-          src={logoImage}
-          alt="Logo"
-          style={{
-            maxWidth: '250px', // Adjust the size of the logo as needed
-            marginRight: '10%', // Add some spacing if necessary
-            display: { xs: 'flex', md: 'none' },
-          }}
-        />
-
+          <img
+            src={logoImage}
+            alt="Logo"
+            style={{
+              maxWidth: '250px',
+              marginRight: '10%',
+              display: { xs: 'flex', md: 'none' },
+            }}
+          />
+  
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -92,7 +94,7 @@ function ResponsiveAppBar({ showSearch, industries, selectedIndustries, setSelec
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+  
           <Typography
             variant="h5"
             noWrap
@@ -111,7 +113,8 @@ function ResponsiveAppBar({ showSearch, industries, selectedIndustries, setSelec
           >
             LOGO
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+  
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 4 }}> 
             {pages.map((page) => (
               <Button
                 key={page}
@@ -124,38 +127,18 @@ function ResponsiveAppBar({ showSearch, industries, selectedIndustries, setSelec
               </Button>
             ))}
           </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          
+          {/* Logout Button placed here to be at the end */}
+          <Button
+            sx={{ my: 2, color: 'white', display: 'block' }}
+            onClick={() => logout({ returnTo: window.location.origin })}
+          >
+            Logout
+          </Button>
+  
         </Toolbar>
       </Container>
     </AppBar>
-  );
+  );    
 }
 export default ResponsiveAppBar;

@@ -175,7 +175,7 @@ return (
               <div className="edit-profile">
                 <Container component="main" direction="column">
                 <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={15} sm={6}>
                     <Avatar value={userProfile.profile_picture}></Avatar>
                   </Grid>
                   <Grid item xs={12} sm={6}>
