@@ -169,7 +169,7 @@ export default function Chat() {
                 ) : null}
               </Grid>
               {match && (
-                <Grid item xs={2.7} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Grid item xs={2.7} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingRight: '14px' }}>
                   <ProfileCard
                     style={{
                       width: '80%', // Adjust the width as needed
