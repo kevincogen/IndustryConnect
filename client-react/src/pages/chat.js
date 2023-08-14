@@ -10,6 +10,7 @@ import useGetCurrentUser from '../hooks/useGetCurrentUser';
 import Sidebar from '../components/partials/ConnectSideBar';
 import Navbar from '../components/partials/navbar';
 import ChatAnimation from '../animations/chatAnimation';
+import ProfileCard from '../components/partials/ProfileCard';
 
 
 const formatTimestamp = (timestamp) => {
@@ -24,6 +25,7 @@ export default function Chat() {
   // get match from location state
   const location = useLocation();
   const match = location?.state?.match;
+  console.log(match)
 
   // get current user from custom hook
   const currentUser = useGetCurrentUser();
@@ -106,7 +108,11 @@ export default function Chat() {
       <Navbar />
       {currentUser ? (
         <div style={{ display: 'flex', flex: 1 }}>
-          <Sidebar currentUser={currentUser[0][0]} refreshMatches={refreshMatches} />
+          <Sidebar 
+              currentUser={currentUser[0][0]} 
+              refreshMatches={refreshMatches}
+              style={{ width: '25%' }} 
+          />
           <div style={{ flex: 1, padding: '16px', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -162,6 +168,17 @@ export default function Chat() {
                   </OuterChatContainer>
                 ) : null}
               </Grid>
+              {match && (
+                <Grid item xs={2.7} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <ProfileCard
+                    style={{
+                      width: '80%', // Adjust the width as needed
+                      alignSelf: 'center', // Center align the card
+                    }}
+                    profile={match}
+                  />
+                </Grid>
+              )}
             </Grid>
           </div>
         </div>
@@ -172,6 +189,5 @@ export default function Chat() {
       )}
     </div>
   );
-  
 }
 
