@@ -4,11 +4,8 @@ import { Grid, Button, TextField } from '@mui/material';
 // styled components
 
 const OuterChatContainer = styled('div')((theme) => ({
-  marginRight: '20px',
-  marginLeft: '10px',
   borderRadius: '16px', 
   backgroundColor: 'white', 
-  padding: '16px', 
   boxShadow: '2px 2px 4px lightgrey',
   flex: 1, 
   display: 'flex', 
@@ -24,6 +21,7 @@ const ChatHistoryContainer = styled(Grid)(({ theme }) => ({
   gap: theme.spacing(1),
   flex: 1,
   overflowY: 'auto',
+  minHeight: '300px',
 }));
 
 const ChatBubble = styled('div')(({ theme, isCurrentUser }) => ({
@@ -54,6 +52,7 @@ const Timestamp = styled('span')(({ theme, isCurrentUser }) => ({
 
 const FormContainer = styled('form')({
   display: 'flex',
+  flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'space-between',
   width: '100%',
@@ -62,21 +61,22 @@ const FormContainer = styled('form')({
 });
 
 const InputField = styled(TextField)({
+  width: '100%',
   flex: 1,
   borderRadius: '16px',
   paddingRight: '8px',
   paddingLeft: '8px',
   margin: '8px',
-  boxShadow: '0px 2px 4px lightgrey',
+  boxShadow: '0px 1px 2px lightgrey',
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
-      borderColor: 'white', // Set the outline color
+      borderColor: 'white',
     },
     '&:hover fieldset': {
-      borderColor: 'lightgrey', // Set the outline color on hover
+      borderColor: 'lightgrey', 
     },
     '&.Mui-focused fieldset': {
-      borderColor: '#55C2C3', // Set the outline color on focus
+      borderColor: '#55C2C3', 
     },
   },
 });
@@ -85,10 +85,10 @@ const SendButton = styled(Button)(({ theme }) => ({
   borderRadius: '16px',
   marginBottom: '8px',
   boxShadow: '0px 2px 4px lightgrey',
-  backgroundColor: '#55C2C3', // Change this to the desired background color
-  color: 'white', // Change this to the desired text color
+  backgroundColor: '#55C2C3', 
+  color: 'white', 
   '&:hover': {
-    backgroundColor: '#55C2C3', // Change this to the desired hover background color
+    backgroundColor: '#55C2C3', 
   },
 }));
 

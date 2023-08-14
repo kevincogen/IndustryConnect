@@ -113,7 +113,7 @@ export default function Chat() {
               refreshMatches={refreshMatches}
               style={{ width: '25%' }} 
           />
-          <div style={{ flex: 1, padding: '16px', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography variant="h4" component="h1" gutterBottom>
@@ -169,7 +169,7 @@ export default function Chat() {
                 ) : null}
               </Grid>
               {match && (
-                <Grid item xs={2.7} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Grid item xs={2.7} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingRight: '14px' }}>
                   <ProfileCard
                     style={{
                       width: '80%', // Adjust the width as needed
