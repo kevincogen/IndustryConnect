@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const useConnection = (props) => {
+const useConnection = (setMatchCallback) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] =useState(null);
   const { user } = useAuth0();
@@ -55,6 +55,7 @@ const useConnection = (props) => {
   
       const data = await response.json();
       console.log('its a match' + data.message); // we will need this response to set something
+      setMatchCallback(); //calback
     } catch (err) {
       console.error(err);
     }

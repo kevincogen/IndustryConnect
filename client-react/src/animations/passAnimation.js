@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import Lottie from 'lottie-web';
-import pageLoad from './pageLoad.json'
+import passAnimation from './passAnimation.json'
 
-const PageLoad = () => {
+const PassAnimation = () => {
   useEffect(() => {
     // Create a Lottie instance
     const lottieInstance = Lottie.loadAnimation({
       container: document.getElementById('lottie-container'), 
-      animationData: pageLoad,
+      animationData: passAnimation,
       loop: true,
       autoplay: true,
     });
@@ -26,4 +26,4 @@ const PageLoad = () => {
   );
 };
 
-export default PageLoad;
+export default PassAnimation;

@@ -38,6 +38,7 @@ const usersRoutes = require('./routes/users');
 const profilesRoutes = require('./routes/profiles'); // Require the profiles routes
 const industriesRoutes = require('./routes/industries');
 const profilesByIndustriesRoutes = require('./routes/profiles-by-industries');
+const checkMatch = require('./routes/checkMatch');
 const connectRoutes = require('./routes/connect');
 const passRoutes = require('./routes/pass');
 const matchRoutes = require('./routes/match');
@@ -52,13 +53,14 @@ app.use('/users', usersRoutes);
 app.use('/api/profiles', profilesRoutes); // Mount the profiles routes
 app.use('/api/industries', industriesRoutes);
 app.use('/api/profiles-by-industries', profilesByIndustriesRoutes);
+app.use('/api/checkMatch', checkMatch)
 app.use('/api/connect', connectRoutes);
 app.use('/api/pass', passRoutes);
 app.use('/api/match', matchRoutes);
 app.use('/api/matchList', matchList);
 app.use('/api/matchRating', matchRating);
 app.use('/api/resume/create', resumeCreate);
-// socket.io
+// // socket.io
 
 io.on('connection', (socket) => {
   console.log('a user connected');

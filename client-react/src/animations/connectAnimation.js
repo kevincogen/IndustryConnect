@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import Lottie from 'lottie-web';
-import pageLoad from './pageLoad.json'
+import connectAnimation from './connectAnimation.json'
 
-const PageLoad = () => {
+const ConnectAnimation = () => {
   useEffect(() => {
     // Create a Lottie instance
     const lottieInstance = Lottie.loadAnimation({
       container: document.getElementById('lottie-container'), 
-      animationData: pageLoad,
+      animationData: connectAnimation,
       loop: true,
       autoplay: true,
     });
@@ -20,10 +20,10 @@ const PageLoad = () => {
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-      <div id="lottie-container" style={{ width: '20%', maxWidth: '600px', height: 'auto', marginBottom: '32px' }}>
+      <div id="lottie-container" style={{ minWidth: '400px', height: 'auto', marginBottom: '32px' }}>
       </div>
     </div>
   );
 };
 
-export default PageLoad;
+export default ConnectAnimation;

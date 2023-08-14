@@ -46,7 +46,6 @@ export default function MatchList({currentUser, refreshMatches }) {
         raterId: currentUserId,
         rating: newValue
       });
-      console.log("Rating updated successfully");
       setMatches((prevMatches) =>
       prevMatches.map((match) =>
         match.id === ratedUserId

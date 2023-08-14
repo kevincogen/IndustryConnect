@@ -45,23 +45,23 @@ const industryCategories = [
 ];
 
 // -- Function to generate random user data
-const generateRandomUser = (industry) => {
+const generateRandomUser = (industry, shouldConnectTo301 = false) => {
   return {
     first_name: faker.person.firstName(),
     last_name: faker.person.lastName(),
     email: faker.internet.email(),
     authentication_id: faker.string.uuid(),
     profile_picture: faker.image.avatar(),
-    industry: industryCategories[Math.floor(Math.random() * industryCategories.length)],
+    industry: industry,
     bio: faker.lorem.paragraph(),
     education: faker.lorem.sentence(),
     experience: faker.person.jobTitle(),
-    industry, // set the industry
     linkedin: faker.internet.url(),
     twitter: faker.internet.url(),
     github: faker.internet.url(),
     facebook: faker.internet.url(),
     website: faker.internet.url(),
+    connections: shouldConnectTo301 ? [301] : []
   };
 };
 
@@ -70,35 +70,42 @@ const seedUsersTable = async () => {
   const client = await pool.connect();
   try {
     await client.query('DELETE FROM users');
-    const numOfUsers = 50;
-    for (let i = 0; i < numOfUsers; i++) {
-      const userData = generateRandomUser();
-      const query = {
-        text: `
-          INSERT INTO users
-            (
-              first_name,
-              last_name,
-              email,
-              authentication_id,
-              profile_picture,
-              industry,
-              bio,
-              education,
-              experience,
-              linkedin,
-              twitter,
-              github,
-              facebook,
-              website
-            )
-          VALUES
-            ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
-        `,
-        values: Object.values(userData),
-      };
-      await client.query(query);
+
+    for (let industry of industryCategories) {
+      for (let i = 0; i < 10; i++) {
+        const shouldConnectTo301 = i % 2 === 1;
+        const userData = generateRandomUser(industry, shouldConnectTo301);
+
+        // Insert user data into the database
+        const query = {
+          text: `
+            INSERT INTO users
+              (
+                first_name,
+                last_name,
+                email,
+                authentication_id,
+                profile_picture,
+                industry,
+                bio,
+                education,
+                experience,
+                linkedin,
+                twitter,
+                github,
+                facebook,
+                website,
+                connections
+              )
+            VALUES
+              ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+          `,
+          values: Object.values(userData),
+        };
+        await client.query(query);
+      }
     }
+
     console.log('Users table seeded successfully.');
   } catch (err) {
     console.error('Error seeding users table:', err);

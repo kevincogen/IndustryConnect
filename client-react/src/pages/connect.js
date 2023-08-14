@@ -11,6 +11,7 @@ import ProfileGrid from '../components/partials/ProfileGrid';
 import Sidebar from '../components/partials/ConnectSideBar';
 import { Box } from '@mui/material';
 import PageLoad from '../animations/pageLoad';
+import MatchAnimation from '../animations/matchAnimation';
 
 
 const Connect = () => {
@@ -18,7 +19,18 @@ const Connect = () => {
   const [industries, setIndustries] = useState([]);
   const [selectedIndustries, setSelectedIndustries] = useState([]);
   const { user, isLoading } = useAuth0();
-  const connection = useConnection();
+  const [hasMatch, setHasMatch] = useState(false);
+
+  const connection = useConnection(() => {
+    setHasMatch(true);
+
+    const timeout = setTimeout(() => {
+      setHasMatch(false);
+    }, 3000);
+  
+    return () => clearTimeout(timeout);
+  });
+
   const [refreshKey, setRefreshKey] = useState(0);
   const [firstSub, setFirstSub] = useState(0)
   const [currentUser, userLoad ] = useGetCurrentUser(refreshKey, firstSub);
@@ -83,7 +95,7 @@ const Connect = () => {
   if (currentUser === null) {
     return (
      <div> 
-    <Navbar />  
+    <Navbar />      
     <PageLoad />
     </div>
     )
@@ -115,7 +127,7 @@ const Connect = () => {
                 Start Networking!
               </NetworkButton>
             ) : (
-              <ProfileCarousel profiles={profiles} currentProfileIndex={currentProfileIndex} connection={{ handleConnect: handleConnectWrapper, handlePass: handlePassWrapper }} currentUser={currentUser[0]} />
+              <ProfileCarousel hasMatch={hasMatch} profiles={profiles} currentProfileIndex={currentProfileIndex} connection={{ handleConnect: handleConnectWrapper, handlePass: handlePassWrapper }} currentUser={currentUser[0]} />
             )
           }
             <ProfileGrid profiles={profiles} currentProfileIndex={currentProfileIndex} connection={{ handleConnect: handleConnectWrapper, handlePass: handlePassWrapper }} currentUser={currentUser} />
