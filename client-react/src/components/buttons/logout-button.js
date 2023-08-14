@@ -1,12 +1,18 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import React from "react";
-import Button from "@mui/material/Button"
+import React from "react";  
+import Button from "@mui/material/Button";
 
 const LogoutButton = () => {
-  const { logout } = useAuth0();
+  const { logout, user } = useAuth0();
+
+  const handleLogout = (event) => {
+    event.stopPropagation();  
+    logout({ returnTo: window.location.origin });
+    console.log(user?.sub)
+  }
 
   return (
-    <Button sx={"background-color:  #2CDDFF"} variant="contained" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+    <Button sx={{ backgroundColor: "#2CDDFF" }} variant="contained" onClick={handleLogout}>
       Log Out
     </Button>
   );

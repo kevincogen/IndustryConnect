@@ -4,7 +4,7 @@ import Container from '@mui/material/Container';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import MatchList from "./MatchTable";
-import Accordion from '@mui/material/Accordion';
+import { Accordion } from "@mui/material";
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -21,12 +21,11 @@ const Sidebar = ({ currentUser, connectHistory, passHistory, profiles, refreshMa
   }));
   
   return (
-    <Container className="profile-sidebar">
+    <Container className="profile-sidebar" style={{ width: '25%' }}>
       <ProfileCard profile={currentUser} sideBarStyle={true} />
       <h3>Match List</h3>
       <MatchList currentUser={currentUser} refreshMatches={refreshMatches}/>
       <StyledAccordion>
-      <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="connectHistory-content"
@@ -46,10 +45,8 @@ const Sidebar = ({ currentUser, connectHistory, passHistory, profiles, refreshMa
               })}
             </List>
           </AccordionDetails>
-        </Accordion>
       </StyledAccordion>
       <StyledAccordion>
-      <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="passHistory-content"
@@ -69,12 +66,12 @@ const Sidebar = ({ currentUser, connectHistory, passHistory, profiles, refreshMa
               })}
             </List>
           </AccordionDetails>
-        </Accordion>
       </StyledAccordion>
     </Container>
   );
 };
 
 export default Sidebar;
+
 
 

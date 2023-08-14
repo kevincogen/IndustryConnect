@@ -13,11 +13,11 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import LogoutButton from '../buttons/logout-button';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import SearchBar from './searchbar';
 import NetworkButton from '../buttons/network-button';
 import logoImage from '../../images/logo.png'
-import { useAuth0 } from '@auth0/auth0-react'; 
+import { useAuth0 } from '@auth0/auth0-react';
 
 
 
@@ -26,6 +26,7 @@ const settings = ['Profile', 'Connect', 'Chat', 'Logout'];
 
 function ResponsiveAppBar({ showSearch, industries, selectedIndustries, setSelectedIndustries, filterProfilesByIndustry }) {
   const { logout } = useAuth0();
+  const location = useLocation();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -48,97 +49,105 @@ function ResponsiveAppBar({ showSearch, industries, selectedIndustries, setSelec
     <AppBar position="fixed" sx={{ backgroundColor: '#13264D' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <img
-            src={logoImage}
-            alt="Logo"
-            style={{
-              maxWidth: '250px',
-              marginRight: '10%',
-              display: { xs: 'flex', md: 'none' },
-            }}
-          />
-  
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-  
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
-  
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 4 }}> 
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-                component={Link}
-                to={`/${page.toLowerCase()}`}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-          
-          {/* Logout Button placed here to be at the end */}
-          <Button
-            sx={{ my: 2, color: 'white', display: 'block' }}
-            onClick={() => logout({ returnTo: window.location.origin })}
-          >
-            Logout
-          </Button>
-  
+          {location.pathname === "/" 
+            ? (
+              <img
+                src={logoImage}
+                alt="Logo"
+                style={{
+                  maxWidth: '250px',
+                  marginRight: '10%',
+                  display: { xs: 'flex', md: 'none' },
+                }}
+              />
+            )
+            : (
+              <>
+                <img
+                  src={logoImage}
+                  alt="Logo"
+                  style={{
+                    maxWidth: '250px',
+                    marginRight: '10%',
+                    display: { xs: 'flex', md: 'none' },
+                  }}
+                />
+                <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                  <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleOpenNavMenu}
+                    color="inherit"
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorElNav}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'left',
+                    }}
+                    open={Boolean(anchorElNav)}
+                    onClose={handleCloseNavMenu}
+                    sx={{
+                      display: { xs: 'block', md: 'none' },
+                    }}
+                  >
+                    {pages.map((page) => (
+                      <MenuItem key={page} onClick={handleCloseNavMenu}>
+                        <Typography textAlign="center">{page}</Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </Box>
+    
+                <Typography
+                  variant="h5"
+                  noWrap
+                  component="a"
+                  href=""
+                  sx={{
+                    mr: 2,
+                    display: { xs: 'flex', md: 'none' },
+                    flexGrow: 1,
+                    fontFamily: 'monospace',
+                    fontWeight: 700,
+                    letterSpacing: '.3rem',
+                    color: 'inherit',
+                    textDecoration: 'none',
+                  }}
+                >
+                  LOGO
+                </Typography>
+    
+                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 4 }}> 
+                  {pages.map((page) => (
+                    <Button
+                      key={page}
+                      onClick={handleCloseNavMenu}
+                      sx={{ my: 2, color: 'white', display: 'block' }}
+                      component={Link}
+                      to={`/${page.toLowerCase()}`}
+                    >
+                      {page}
+                    </Button>
+                  ))}
+                </Box>
+                <LogoutButton />
+              </>
+            )
+          }
         </Toolbar>
       </Container>
     </AppBar>
-  );    
+  );  
 }
 export default ResponsiveAppBar;
