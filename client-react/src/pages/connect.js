@@ -12,6 +12,7 @@ import Sidebar from '../components/partials/ConnectSideBar';
 import { Box } from '@mui/material';
 import PageLoad from '../animations/pageLoad';
 import MatchAnimation from '../animations/matchAnimation';
+import backgroundImage from '../images/human-resources-concept-with-people.jpeg';
 
 
 const Connect = () => {
@@ -119,13 +120,16 @@ const Connect = () => {
             profiles={profiles} />
           <div className="page-body">
           {profiles.length === 0 ? (
-              <NetworkButton 
-                style={{ height: '30px' }}
-                onClick={filterProfilesByIndustry} 
-                size="large"
-              >
-                Start Networking!
-              </NetworkButton>
+          <div className="carousel-style">
+            <backgroundImage />
+
+            <NetworkButton 
+              style={{ alignSelf: 'center', maxWidth: '80%', height: '50px', fontSize: '20px' }}
+              onClick={filterProfilesByIndustry}
+            >
+              Start Networking!
+            </NetworkButton>
+        </div>
             ) : (
               <ProfileCarousel hasMatch={hasMatch} profiles={profiles} currentProfileIndex={currentProfileIndex} connection={{ handleConnect: handleConnectWrapper, handlePass: handlePassWrapper }} currentUser={currentUser[0]} />
             )

@@ -35,17 +35,43 @@
   flex-direction: column;
 }
 
+.carousel-style {
+  padding: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 650px;
+  max-height: 650px;
+  border-radius: 10px;
+  border: 1px solid grey;
+  background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.99)),
+      url('./images/human-resources-concept-with-people.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
+
 .profile-carousel {
   padding: 5%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 600px;
   /* justify-content: space-between; */
   border-radius: 10px;
   border: 1px solid grey;
   background-color: white;
   min-height: 650px;
   max-height: 650px;
+  background-image: 
+  linear-gradient(rgba(255, 255, 255, 0.81), rgba(255, 255, 255, 0.99)),
+  url('./images/human-resources-concept-with-people.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .carousel-card {

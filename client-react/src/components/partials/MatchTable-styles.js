@@ -7,7 +7,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   alignItems: 'flex-start',
   flex: 1,
-  borderRadius: '14px',
+  borderRadius: '10px',
   boxShadow: '2px 2px 4px lightgrey',
 }));
 

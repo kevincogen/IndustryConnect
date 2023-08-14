@@ -12,8 +12,16 @@ function ProfileCard({ carousel, profile, connection, currentUser }) {
     // You can render a placeholder or return null
     return <div>Profile not available</div>;
   }
+
+  const cardStyle = {
+    maxWidth: 345,
+    borderRadius: '10px',
+    boxShadow: '2px 2px 4px lightgrey',
+    backgroundColor: "#F6F8F6",
+  };
+
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={cardStyle}>
       <CardMedia
         sx={{ height: 140 }}
         image={profile.profile_picture || "default-image.jpg"} // Fallback image if undefined
