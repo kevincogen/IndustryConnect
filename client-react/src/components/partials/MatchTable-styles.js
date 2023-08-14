@@ -9,8 +9,8 @@ const StyledBox = styled(Box)(({ theme }) => ({
   flex: 1,
   borderRadius: '10px',
   boxShadow: '2px 2px 4px lightgrey',
-  maxHeight: '400px', // Set the height to the height of 5 rows
-  overflowY: 'auto',  // Make it scrollable
+  maxHeight: '400px', 
+  overflowY: 'auto',  
 }));
 
 
