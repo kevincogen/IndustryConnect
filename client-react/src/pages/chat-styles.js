@@ -67,7 +67,7 @@ const InputField = styled(TextField)({
   paddingRight: '8px',
   paddingLeft: '8px',
   margin: '8px',
-  boxShadow: '0px 2px 4px lightgrey',
+  boxShadow: '0px 1px 2px lightgrey',
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
       borderColor: 'white',
