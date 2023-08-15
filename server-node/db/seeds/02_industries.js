@@ -1,13 +1,4 @@
-const { Pool } = require('pg');
-
-// -- Configure the database connection
-const pool = new Pool({
-  user: 'labber',
-  host: 'localhost',
-  database: 'industry_connect',
-  password: 'labber',
-  port: 5432,
-});
+const db = require('../db/connection');
 
 // -- List of industry categories
 const industryCategories = [
@@ -45,7 +36,7 @@ const industryCategories = [
 
 // -- Function to seed industries table
 const seedIndustriesTable = async () => {
-  const client = await pool.connect();
+  const client = await db.connect();
   try {
     for (const category of industryCategories) {
       const query = {
@@ -64,7 +55,7 @@ const seedIndustriesTable = async () => {
     console.error('Error seeding industries table:', err);
   } finally {
     client.release();
-    pool.end();
+    db.end();
   }
 };
 

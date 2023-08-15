@@ -3,6 +3,9 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
+console.log('DB_HOST:', process.env.DB_HOST);
+console.log('DB_USER:', process.env.DB_USER);
+
 // other dependencies
 const fs = require('fs');
 const chalk = require('chalk');

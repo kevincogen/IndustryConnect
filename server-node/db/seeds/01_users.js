@@ -1,14 +1,6 @@
 const { faker } = require('@faker-js/faker');
-const { Pool } = require('pg');
+const db = require('../db/connection');
 
-// -- Configure the database connection
-const pool = new Pool({
-  user: 'labber',
-  host: 'localhost',
-  database: 'industry_connect',
-  password: 'labber',
-  port: 5432,
-});
 
 const industryCategories = [
   "Information Technology",
@@ -148,7 +140,7 @@ const generateRandomUser = (industry, index, shouldConnectTo301 = false) => {
 };
 
 const seedUsersTable = async () => {
-  const client = await pool.connect();
+  const client = await db.connect();
   try {
     await client.query('DELETE FROM users');
     let userCount = 0; // Start with 0
@@ -192,7 +184,7 @@ const seedUsersTable = async () => {
     console.error('Error seeding users table:', err);
   } finally {
     client.release();
-    pool.end();
+    db.end();
   }
 };
 
