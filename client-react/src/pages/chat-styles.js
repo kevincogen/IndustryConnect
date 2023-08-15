@@ -11,17 +11,16 @@ const OuterChatContainer = styled('div')((theme) => ({
   display: 'flex', 
   flexDirection: 'column',
   border: '1px solid #E0E0E0',
-  maxHeight: '750px',
+  height: '487px',
   overflow: 'hidden',
 }))
 
 const ChatHistoryContainer = styled(Grid)(({ theme }) => ({
   display: 'flex',
-  flexDirection: 'column',
+  flexDirection: 'column-reverse',
   gap: theme.spacing(1),
   flex: 1,
   overflowY: 'auto',
-  minHeight: '300px',
 }));
 
 const ChatBubble = styled('div')(({ theme, isCurrentUser }) => ({
@@ -30,6 +29,7 @@ const ChatBubble = styled('div')(({ theme, isCurrentUser }) => ({
   borderRadius: '16px',
   wordWrap: 'break-word',
   margin: theme.spacing(1),
+  justifyContent: 'flex-end',
   alignSelf: isCurrentUser ? 'flex-end' : 'flex-start',
   backgroundColor: isCurrentUser ? '#55C2C3' : '#F6F8F6',
   color: isCurrentUser ? 'white' : '#7E8C9C',
