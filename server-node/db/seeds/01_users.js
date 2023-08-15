@@ -159,11 +159,31 @@ const seedUsersTable = async () => {
         const userData = generateRandomUser(industry, userCount, shouldConnectTo301);
 
         const query = {
-          // ... (no changes here in the query setup)
+          text: `
+            INSERT INTO users
+              (
+                first_name,
+                last_name,
+                email,
+                authentication_id,
+                profile_picture,
+                industry,
+                bio,
+                education,
+                experience,
+                linkedin,
+                twitter,
+                github,
+                facebook,
+                website,
+                connections
+              )
+            VALUES
+              ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+          `,
+          values: Object.values(userData),
         };
         await client.query(query);
-
-        userCount++;
       }
     }
 
