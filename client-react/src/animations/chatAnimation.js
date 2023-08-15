@@ -20,7 +20,7 @@ const ChatAnimation = () => {
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-      <div id="lottie-container" style={{ width: '80%', maxWidth: '600px', height: 'auto', marginBottom: '32px' }}>
+      <div id="lottie-container" style={{ width: '40%', maxWidth: '600px', height: 'auto', marginBottom: '32px' }}>
       </div>
     </div>
   );
