@@ -22,6 +22,7 @@ const ChatHistoryContainer = styled(Grid)(({ theme }) => ({
   flex: 1,
   overflowY: 'auto',
   minHeight: '300px',
+  // marginBottom: '50px',
 }));
 
 const ChatBubble = styled('div')(({ theme, isCurrentUser }) => ({

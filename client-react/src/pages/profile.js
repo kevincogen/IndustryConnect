@@ -46,6 +46,7 @@ const Profile = () => {
     last_name: "",
     email: "",
     bio: "",
+    profile_picture: "",
     education: "",
     experience: "",
     linkedin: "",
@@ -80,7 +81,6 @@ const Profile = () => {
             last_name: user.family_name || "",
             email: user.email || "",
             authentication_id: user.sub || "",
-            profile_picture: user.picture || "",
           };
 
           setUserProfile(mergedUserProfile);

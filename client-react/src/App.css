@@ -4,12 +4,13 @@
   /* background-color: #F6F8F6; */
 }
 
-#root .profile-sidebar.MuiContainer-root {
+.profile-sidebar.MuiContainer-root {
   position: static;
   margin-top: 95px;
   left: 0;
   width: 25%;
 }
+
 
 .page-body {
   display: flex;
@@ -21,6 +22,35 @@
 }
 
 .search-bar {
+  position: fixed;
+  margin-top: 95px;
+  right: 0;
+  margin-right: 25px;
+  margin-left: 25px;
+  border-radius: 10px;
+  border: 1px solid grey;
+  background-color: white;
+  width: 20%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+.search-bar2 {
+  position: absolute;
+  margin-top: 95px;
+  right: 0;
+  margin-right: 25px;
+  margin-left: 25px;
+  border-radius: 10px;
+  border: 1px solid grey;
+  background-color: white;
+  width: 20%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-bar {
   position: fixed;
   margin-top: 95px;
   right: 0;

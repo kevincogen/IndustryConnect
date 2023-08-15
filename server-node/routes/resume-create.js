@@ -78,7 +78,7 @@ try {
 // Process each pastExperience entry to fetch the refined bullet points
 for (let experience of newEntry.pastExperience) {
   const promptForExperience = `
-      Given my role as ${experience.position} at ${experience.company}, where I was responsible for: ${experience.description}, provide three industry-standard bullet points detailing my roles and achievements in the first person.
+      Given my role as ${experience.position} at ${experience.company}, where I was responsible for: ${experience.description}, provide three industry-standard bullet points detailing my roles and achievements in the first person. Avoid lying about stats and numbers, instead make the achievements sound believable but generic.
       Ensure the result is three lines only, each beginning with a dot bullet point, without mentioning the role or company.
   `;
 
