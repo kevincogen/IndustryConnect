@@ -1,5 +1,5 @@
 const { faker } = require('@faker-js/faker');
-const db = require('../db/connection');
+const db = require('../connection');
 
 
 const industryCategories = [
@@ -184,7 +184,6 @@ const seedUsersTable = async () => {
     console.error('Error seeding users table:', err);
   } finally {
     client.release();
-    db.end();
   }
 };
 
