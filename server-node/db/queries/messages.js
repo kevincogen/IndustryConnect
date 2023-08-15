@@ -1,9 +1,10 @@
-const db = require('../../db/connection');
+const db = require('../connection');
 const { Pool } = require('pg');
 
 
 // Function to get chat history for a specific user from the database
 async function getChatHistoryFromDatabase(matchId) {
+  console.log("hey")
   const query = 'SELECT * FROM messages WHERE match_id = $1';
   const values = [matchId];
 
