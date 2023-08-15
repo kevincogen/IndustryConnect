@@ -151,8 +151,7 @@ const seedUsersTable = async () => {
   const client = await pool.connect();
   try {
     await client.query('DELETE FROM users');
-
-    let userCount = 0;
+    let userCount = 0; // Start with 0
     for (let industry of industryCategories) {
       for (let i = 0; i < 10; i++) {
         const shouldConnectTo301 = i % 2 === 1;
@@ -184,9 +183,10 @@ const seedUsersTable = async () => {
           values: Object.values(userData),
         };
         await client.query(query);
+
+        userCount++;
       }
     }
-
     console.log('Users table seeded successfully.');
   } catch (err) {
     console.error('Error seeding users table:', err);

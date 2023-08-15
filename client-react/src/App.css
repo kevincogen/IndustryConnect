@@ -267,7 +267,7 @@ button {
     padding: 15px;
     cursor: pointer;
     outline: none;
-    background-color: #0026fe;
+    background-color: "#2CDDFF";
     border: none;
     color: #f5f5f5;
     font-size: 16px;
@@ -323,7 +323,7 @@ button {
 }
 
 #addBtn:hover {
-  background-color: green;
+  background-color: "#2CDDFF";
 }
 
 #deleteBtn {

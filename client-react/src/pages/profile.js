@@ -347,21 +347,12 @@ return (
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                       <Button 
+                        sx={{ backgroundColor: "#2CDDFF" }}
+                        variant="contained"
                         type="submit" 
-                        variant="contained" 
                         color="primary"
                       >
                         Update Profile
-                      </Button>
-                    </Grid>
-        
-                    <Grid item xs={12} sm={6}>
-                      <Button
-                        onClick={() =>
-                          logout({ logoutParams: { returnTo: window.location.origin } })
-                        }
-                      >
-                        Logout
                       </Button>
                     </Grid>
                   </Grid>
@@ -404,20 +395,11 @@ return (
               <Grid container spacing={2}>
             {userProfile.authentication_id && userProfile.created_at && (
               <Grid item xs={12} sm={6}>
-                <Button onClick={toggleEditMode}>
+                <Button sx={{ backgroundColor: "#2CDDFF" }} variant="contained" onClick={toggleEditMode}>
                   Update Profile
                 </Button>
               </Grid>
             )}
-            <Grid item xs={12} sm={6}>
-              <Button
-                onClick={() =>
-                  logout({ logoutParams: { returnTo: window.location.origin } })
-                }
-              >
-                Logout
-              </Button>
-            </Grid>
           </Grid>
         </Container>
         </div>
