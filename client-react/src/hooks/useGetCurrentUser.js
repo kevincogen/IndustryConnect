@@ -13,14 +13,13 @@ const useGetCurrentUser = (refreshKey, firstSub) => {
       return;
     }
 
-    fetch('http://localhost:8080/api/profiles/user', {
+    fetch(`${process.env.REACT_APP_API_SERVER_URL}/api/profiles/user`, {
       headers: {
         'X-Auth0-Sub': sub
       }
     })
     .then(response => response.json())
     .then(data => setCurrentUser(data))
-    // .then(console.log)
   }, [sub, userLoad, refreshKey]);
 
   return [currentUser, userLoad];

@@ -38,7 +38,7 @@ export default function Chat() {
     } 
   
     if (match) {
-      const socket = io("http://localhost:3000");
+      const socket = io(process.env.REACT_APP_FRONTEND_URL);
       
       // get chat history from server
       socket.emit("get_chat_history", match.match_id, (response) => {
@@ -76,7 +76,7 @@ export default function Chat() {
     const matchId = match.match_id;
     const msg = { matchId, sender_id, receiver_id, message };
     
-    const socket = io("http://localhost:3000");
+    const socket = io(process.env.REACT_APP_FRONTEND_URL);
     socket.emit("chat message", msg);
    
     event.target.reset();
@@ -86,12 +86,10 @@ export default function Chat() {
     const getMatchList = async () => {
       if (!currentUserId) return;
       if (currentUserId) {
-        console.log("We have currentUserId: ", currentUserId);
         try {
-          const response = await axios.get(`http://localhost:8080/api/matchList/${currentUserId}`);
+          const response = await axios.get(`${process.env.REACT_APP_API_SERVER_URL}/api/matchList/${currentUserId}`);
           setMatches(response.data);
         } catch (error) {
-          console.error("There was an error retrieving the matches: ", error);
         }
       }
     };
@@ -99,7 +97,6 @@ export default function Chat() {
   }, [currentUserId, refreshMatches]);
 
   if (currentUser[0] === null) {
-    console.log("currentUser is null")
     return <div>Loading...</div>;
   } 
 

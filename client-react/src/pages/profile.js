@@ -69,7 +69,7 @@ const Profile = () => {
         }
           // Fetch user info from the endpoint
           const userInfoResponse = await fetch(
-            `/api/users/profile?authentication_id=${user.sub}`
+            `${process.env.REACT_APP_API_SERVER_URL}/api/users/profile?authentication_id=${user.sub}`
           );
           const userInfo = await userInfoResponse.json();
 

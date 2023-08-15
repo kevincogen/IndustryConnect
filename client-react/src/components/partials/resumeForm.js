@@ -25,7 +25,7 @@ const ResumeForm = ({profileName, userId}) => {
     };
     console.log(payload);
     axios
-    .post("http://localhost:8080/api/resume/create", payload, {})
+    .post(`${process.env.REACT_APP_API_SERVER_URL}/api/resume/create`, payload, {})
     .then((res) => {
         if (res.data.message) {
             console.log("res", res.data.data);

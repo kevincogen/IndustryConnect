@@ -21,7 +21,7 @@ const ProfileCarousel = (props) => {
     // Let ConnectAnimation play for 1 second
     setTimeout(async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/checkMatch?profileId=${profileId}&userId=${userId}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_SERVER_URL}/api/checkMatch?profileId=${profileId}&userId=${userId}`);
         if (response.data.isMatch) {
           setShowMatchAnimation(true);
           setTimeout(() => {

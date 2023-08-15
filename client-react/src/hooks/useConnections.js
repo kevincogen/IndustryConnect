@@ -14,7 +14,7 @@ const useConnection = (setMatchCallback) => {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:8080/api/pass', {
+      const response = await fetch(`${process.env.REACT_APP_API_SERVER_URL}/api/pass`, {
         method: 'PUT', 
         headers: {
           'Content-Type': 'application/json',
@@ -28,8 +28,6 @@ const useConnection = (setMatchCallback) => {
       }
 
       // Success Logic
-      console.log('pass successful');
-
     } catch (err) {
       setError(err.message);
     } finally {
@@ -40,7 +38,7 @@ const useConnection = (setMatchCallback) => {
   //MATCH (MUST CONNECT FIRST)
   const handleMatch = async (currentUser, userToConnect) => {
     try {
-      const response = await fetch('http://localhost:8080/api/match', {
+      const response = await fetch(`${process.env.REACT_APP_API_SERVER_URL}/api/match`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -50,11 +48,9 @@ const useConnection = (setMatchCallback) => {
   
       if (!response.ok) {
         throw new Error('Failed to create match');
-
       }
   
       const data = await response.json();
-      console.log('its a match' + data.message); // we will need this response to set something
       setMatchCallback(); //calback
     } catch (err) {
       console.error(err);
@@ -71,7 +67,7 @@ const useConnection = (setMatchCallback) => {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:8080/api/connect', {
+      const response = await fetch(`${process.env.REACT_APP_API_SERVER_URL}/api/connect`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -85,7 +81,6 @@ const useConnection = (setMatchCallback) => {
       }
 
       // Success Logic (MATCH)
-      console.log('success');
       if (profileConnections.includes(userId)) {
         handleMatch(userId, userIdToConnect);
       }

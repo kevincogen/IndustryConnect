@@ -1,7 +1,7 @@
 
 export async function createProfile(userProfile) {
   try {
-    const response = await fetch("/api/users/register", {
+    const response = await fetch(`${process.env.REACT_APP_API_SERVER_URL}/api/users/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,7 +27,7 @@ export async function createProfile(userProfile) {
 
 export async function updateProfile(userProfile) {
   try {
-    const response = await fetch("/api/users/update", {
+    const response = await fetch(`${process.env.REACT_APP_API_SERVER_URL}/api/users/update`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export async function updateProfile(userProfile) {
 
 export async function getProfile(authenticationId) {
   try {
-    const response = await fetch(`/api/users/profile?authentication_id=${authenticationId}`);
+    const response = await fetch(`${process.env.REACT_APP_API_SERVER_URL}/api/users/profile?authentication_id=${authenticationId}`);
 
     if (response.ok) {
       const userProfile = await response.json();

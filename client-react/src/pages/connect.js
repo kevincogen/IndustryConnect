@@ -43,7 +43,7 @@ const Connect = () => {
   const [refreshMatches, setRefreshMatches] = useState(0);
 
   useEffect(() => {   
-    fetch('http://localhost:8080/api/industries')
+    fetch(`${process.env.REACT_APP_API_SERVER_URL}/api/industries`)
       .then(response => response.json())
       .then(data => setIndustries(data.map(item => item.name)));
   }, []);
@@ -59,7 +59,7 @@ const Connect = () => {
     }
 
     if (selectedIndustries.length === 0) {
-      fetch('http://localhost:8080/api/profiles', {
+      fetch(`${process.env.REACT_APP_API_SERVER_URL}/api/profiles`, {
         headers: {
           'X-Auth0-Sub': sub
         }
@@ -68,7 +68,7 @@ const Connect = () => {
       .then(data => setProfiles(data))
     } else {
       const industryQuery = selectedIndustries.join('.');
-      fetch(`http://localhost:8080/api/profiles-by-industries/${industryQuery}`, {
+      fetch(`${process.env.REACT_APP_API_SERVER_URL}/api/profiles-by-industries/${industryQuery}`, {
         headers: {
           'X-Auth0-Sub': sub
         }

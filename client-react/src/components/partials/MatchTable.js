@@ -42,7 +42,7 @@ export default function MatchList({currentUser, refreshMatches }) {
     // console.log("newValue: ", newValue);
     
     try {
-      await axios.put(`http://localhost:8080/api/matchRating/${ratedUserId}`, {
+      await axios.put(`${process.env.REACT_APP_API_SERVER_URL}/api/matchRating/${ratedUserId}`, {
         raterId: currentUserId,
         rating: newValue
       });
@@ -65,7 +65,7 @@ export default function MatchList({currentUser, refreshMatches }) {
   useEffect(() => {
     const getMatchList = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/matchList/${currentUserId}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_SERVER_URL}/api/matchList/${currentUserId}`);
         console.log("response.data: ", response.data);
         setMatches(response.data);
       } catch (error) {
