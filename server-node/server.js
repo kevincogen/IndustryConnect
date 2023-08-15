@@ -1,5 +1,7 @@
 // load .env data into process.env
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 const { getChatHistoryFromDatabase, postMessageToDB } = require('./db/queries/messages');
 
@@ -18,7 +20,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
-      origin: "http://localhost:3000"
+      origin: process.env.FRONT_END_URL,
   }
 });
 
