@@ -51,7 +51,7 @@ const generateRandomUser = (industry, shouldConnectTo301 = false) => {
     last_name: faker.person.lastName(),
     email: faker.internet.email(),
     authentication_id: faker.string.uuid(),
-    profile_picture: faker.image.avatar(),
+    profile_picture: faker.image.avatarLegacy(),
     industry: industry,
     bio: faker.lorem.paragraph(),
     education: faker.lorem.sentence(),
