@@ -89,6 +89,30 @@
   padding-bottom: 10px;
 }
 
+.search-bar2 {
+  position: absolute;
+  margin-top: 95px;
+  right: 0;
+  margin-right: 15px;
+  margin-left: 25px;
+  border-radius: 10px;
+  border: 1px solid grey;
+  background-color: white;
+  width: 20%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-container {
+  box-shadow: 2px 2px 4px lightgrey;
+  border-radius: 16px;
+  height: 487px;
+}
+.chat-history-container {
+  padding-bottom: 10px;
+}
+
 .carousel-style {
   padding: 5%;
   display: flex;
