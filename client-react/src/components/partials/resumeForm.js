@@ -175,7 +175,7 @@ setLoading(true);
                 </div>
             ))}
           </div>
-          <button>CREATE RESUME</button>
+          <button id='addBtn'>CREATE RESUME</button>
         </form>
         )}
     </div>
