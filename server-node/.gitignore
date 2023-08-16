@@ -1,6 +1,7 @@
 node_modules/
 public/styles
 .env
+.env-copy
 *.log
 *.sqlite3
 db/seeds/kevin_test_users.md
