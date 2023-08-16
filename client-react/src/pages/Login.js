@@ -2,8 +2,8 @@ import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import Navbar from '../components/partials/navbar';
 import LoginButton from "../components/buttons/login-button";
-
-import backgroundImage from '../images/human-resources-concept-with-people.jpeg'; // Import the background image
+import backgroundImage from '../images/human-resources-concept-with-people.jpeg';
+import logoImage from '../images/logo.png';
 
 const Login = () => {
   return (
@@ -23,7 +23,12 @@ const Login = () => {
     >
       <Navbar />
       <div className="page-body-logo">
+        <div className="login-card">
+        <img className="landing-logo"
+          src={logoImage}
+          alt="Logo"/>  
         <LoginButton />
+        </div>
       </div>
       <div
         style={{

@@ -378,3 +378,21 @@ button {
     text-align: justify;
     margin-bottom: 30px;
 }
+
+/* Login */
+.login-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: #13264D;
+  border-radius: 30px;
+  box-shadow: 7px 2px 4px lightgrey;
+  padding: 10%;
+  margin-bottom: 30vh;
+}
+
+.landing-logo {
+  max-width: 420px;
+  margin-bottom: 10%;
+  margin-right: 8%
+}
