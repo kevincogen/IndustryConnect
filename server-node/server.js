@@ -11,7 +11,7 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.SERVER_PORT;
 const app = express();
 
 // socket.io config
@@ -98,3 +98,5 @@ io.on('connection', (socket) => {
 server.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+
+
