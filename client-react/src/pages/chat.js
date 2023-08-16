@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useLocation } from 'react-router-dom';
 import { io } from "socket.io-client";
 import { Grid, Typography } from '@mui/material';
@@ -21,85 +21,85 @@ export default function Chat() {
   const [chatHistory, setChatHistory] = useState([]); 
   const [matches, setMatches] = useState([]);
   const [refreshMatches, setRefreshMatches] = useState(0);
-
-  // get match from location state
   const location = useLocation();
   const match = location?.state?.match;
-  console.log(match)
-
-  // get current user from custom hook
   const currentUser = useGetCurrentUser();
   const currentUserId = currentUser?.[0]?.[0]?.id;
-  
-  
-  useEffect(() => {
-    if (currentUser === null) {
-      return <div>Loading...</div>;
-    } 
-  
-    if (match) {
-      const socket = io(process.env.REACT_APP_FRONTEND_URL);
-      
-      // get chat history from server
-      socket.emit("get_chat_history", match.match_id, (response) => {
-        setChatHistory(response)
-        })
-      
-      // listen for incoming messages
-      socket.on("chat message", (msg) => {
-        setChatHistory((chatHistory) => [...chatHistory, msg]);
-      });
+  const socketRef = useRef(null);
+  const chatHistoryRef = useRef(null);
 
-      // disconnect socket connection
-      return () => {
-        socket.disconnect();
+  useEffect(() => {
+    socketRef.current = io(process.env.REACT_APP_FRONTEND_URL);
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!match) return;
+
+    if (socketRef.current) {
+      socketRef.current.emit("get_chat_history", match.match_id, (response) => {
+        setChatHistory(response);
+      });
+    }
+
+    const handleMessage = (msg) => {
+      setChatHistory((prevHistory) => [...prevHistory, msg]);
+    };
+
+    if (socketRef.current) {
+      socketRef.current.on("chat message", handleMessage);
+    }
+
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.off("chat message", handleMessage);
       }
     };
   }, [match]);
 
-  const chatBubbles = document.querySelectorAll('.chat-bubble');
+  useEffect(() => {
+    const chatHistoryElem = chatHistoryRef.current;
+    if (chatHistoryElem) {
+      chatHistoryElem.scrollTop = chatHistoryElem.scrollHeight;
+    }
+  }, [chatHistory]);
 
   useEffect(() => {
-    if (chatBubbles.length > 0) {
-      const latestMessage = chatBubbles[chatBubbles.length - 1];
-      latestMessage.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [chatBubbles.length, chatHistory])
+    const getMatchList = async () => {
+      if (!currentUserId) return;
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_SERVER_URL}/api/matchList/${currentUserId}`);
+        setMatches(response.data);
+      } catch (error) {
+        // Handle the error here
+      }
+    };
+    getMatchList();
+  }, [currentUserId]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    //organize message data
     const message = event.target.elements.message.value;
     const sender_id = currentUserId;
     const receiver_id = match.id;
     const matchId = match.match_id;
     const msg = { matchId, sender_id, receiver_id, message };
-    
-    const socket = io(process.env.REACT_APP_FRONTEND_URL);
-    socket.emit("chat message", msg);
-   
+
+    if (socketRef.current) {
+      socketRef.current.emit("chat message", msg);
+    }
+
     event.target.reset();
   };
 
-  useEffect(() => {
-    const getMatchList = async () => {
-      if (!currentUserId) return;
-      if (currentUserId) {
-        try {
-          const response = await axios.get(`${process.env.REACT_APP_API_SERVER_URL}/api/matchList/${currentUserId}`);
-          setMatches(response.data);
-        } catch (error) {
-        }
-      }
-    };
-    getMatchList();
-  }, [currentUserId, refreshMatches]);
-
-  if (currentUser[0] === null) {
+  if (!currentUser || !currentUser[0]) {
     return <div>Loading...</div>;
-  } 
-
+  }
+  
   return (
     <div>
         <Navbar />
@@ -114,7 +114,7 @@ export default function Chat() {
                 {match ? (
                     <>
                     <OuterChatContainer>
-                        <ChatHistoryContainer className='no-scrollbar chat-history-container'>
+                        <ChatHistoryContainer ref={chatHistoryRef} className='no-scrollbar chat-history-container'>
                             {chatHistory.slice().reverse().map((message, index) => (
                                 <ChatBubble className="chat-bubble" key={index} isCurrentUser={message.sender_id === currentUserId}>
                                     <span>{message.message}</span>
