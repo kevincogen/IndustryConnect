@@ -29,7 +29,7 @@ export default function Chat() {
   const chatHistoryRef = useRef(null);
 
   useEffect(() => {
-    socketRef.current = io(process.env.REACT_APP_FRONTEND_URL);
+    socketRef.current = io(process.env.REACT_APP_API_SERVER_URL);
     return () => {
       if (socketRef.current) {
         socketRef.current.disconnect();
