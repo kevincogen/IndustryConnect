@@ -43,6 +43,7 @@ export default function Chat() {
     if (socketRef.current) {
       socketRef.current.emit("get_chat_history", match.match_id, (response) => {
         setChatHistory(response);
+        console.log(response)
       });
     }
 
@@ -91,6 +92,7 @@ export default function Chat() {
 
     if (socketRef.current) {
       socketRef.current.emit("chat message", msg);
+      console.log(msg)
     }
 
     event.target.reset();
