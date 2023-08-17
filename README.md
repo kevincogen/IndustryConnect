@@ -10,6 +10,10 @@ Welcome to Industry Connect! We've brought together the simplicity of a matching
 
 **Visit our live website**: [Industry Connect](https://industryconnect-react.onrender.com/)
 
+[![Demo Video](https://i.imgur.com/3rleU54.png)](https://www.youtube.com/watch?v=Y8Ega9iLNks)
+**Click the image above to play the video!** If it doesn't work, [click here](https://www.youtube.com/watch?v=Y8Ega9iLNks).
+
+
 ## Tech Stack
 * **Backend**: PostgreSQL, Express.js, Node.js
 * **Frontend**: React, Material UI with custom CSS
