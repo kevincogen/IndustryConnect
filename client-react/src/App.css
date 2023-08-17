@@ -230,9 +230,6 @@
   padding: 30px;
   min-width: 55%;
 }
-/* Resume Style -Remove Defaults Later*/
-
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
 
 * {
     box-sizing: border-box;
@@ -374,6 +371,10 @@ button {
 .resumeBodyTitle {
     margin-bottom: 5px;
 }
+
+.workHistoryDescription {
+  margin-bottom: 5px;
+}
 .resumeBodyContent {
     text-align: justify;
     margin-bottom: 30px;
@@ -385,6 +386,7 @@ button {
   flex-direction: column;
   justify-content: space-evenly;
   background-color: #13264D;
+  opacity: 0.85;
   border-radius: 30px;
   box-shadow: 7px 2px 4px lightgrey;
   padding: 10%;
@@ -392,7 +394,7 @@ button {
 }
 
 .landing-logo {
-  max-width: 420px;
+  max-width: 500px;
   margin-bottom: 10%;
   margin-right: 8%
 }
