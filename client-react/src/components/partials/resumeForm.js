@@ -2,6 +2,7 @@ import { useState } from "react";
 import Loading from "./Loading";
 import axios from "axios";
 import ResumeAI from "./resumeAI";
+import ResumeLoading from "../../animations/resumeLoading";
 
 const ResumeForm = ({profileName, userId}) => {
   const [fullName, setFullName] = useState(profileName || "");
@@ -42,7 +43,7 @@ setLoading(true);
   };
 
   if (loading) {
-    return <Loading />;
+    return <ResumeLoading />;
   }
 
   //Past Experience Build, Remove, Update

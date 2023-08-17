@@ -175,9 +175,13 @@ return (
               <div className="edit-profile">
                 <Container component="main" direction="column">
                 <Grid container spacing={2}>
-                  <Grid item xs={15} sm={6}>
-                    <Avatar value={userProfile.profile_picture}></Avatar>
-                  </Grid>
+                <Grid item xs={5} sm={6}>
+                  <Avatar 
+                    src={userProfile.profile_picture}
+                    value={userProfile.profile_picture}
+                    style={{ width: '75px', height: '75px' }}
+                  ></Avatar>
+                </Grid>
                   <Grid item xs={12} sm={6}>
                     <Typography component="h1" variant="h5" name={user?.name}>
                       {user?.name}
