@@ -1,37 +1,60 @@
-# Project Notes
+# Industry Connect: Networking App
 
-## auth0 Set-up
+Welcome to Industry Connect! We've brought together the simplicity of a matching carousel app, infused with the professional networking might of platforms like LinkedIn, all while giving users the power of advanced AI tools for an unrivaled CV building experience.
 
-auth0 quickstart docs: https://auth0.com/docs/quickstart/spa/react/interactive
-auth0 - Deepdive (for later use with Browser Router?): 
+## Introduction
 
-  https://developer.auth0.com/resources/guides/spa/react/basic-authentication?_gl=1*4tpnkw*_gcl_aw*R0NMLjE2OTAzMzE1MTguQ2owS0NRanc1ZjJsQmhDa0FSSXNBSGVUdmxpUHFPbHU1eUlVWjBVaGl2Z2dNcUY3cDlaS3JjNVZXN2txZ3BIZFNWYThQS1MwTTJSejlMWWFBcmowRUFMd193Y0I.*_gcl_au*MTI0NzkwNDI5OC4xNjkwMzMxNTE4*rollup_ga*MTI4OTM2MzcxMi4xNjkwMzMxNTE4*rollup_ga_F1G3E656YZ*MTY5MDQxODA5My41LjEuMTY5MDQxODEyMy4zMC4wLjA.*_ga*MTI4OTM2MzcxMi4xNjkwMzMxNTE4*_ga_QKMSDV5369*MTY5MDQxODA5My41LjEuMTY5MDQxODEyMy4zMC4wLjA.&_ga=2.218315609.1913116850.1690331518-1289363712.1690331518&_gac=1.258341240.1690331518.Cj0KCQjw5f2lBhCkARIsAHeTvliPqOlu5yIUZ0UhivggMqF7p9ZKrc5VW7kqgpHdSVa8PKS0M2Rz9LYaArj0EALw_wcB
+**Industry Connect's Mission**: 
 
-## API Routes Planning
+> Our goal was to infuse the simple appeal of a carousel-based matching app with the robust networking capabilities akin to LinkedIn. To further enhance user experience, we've integrated cutting-edge AI tools that assist in crafting an outstanding CV.
 
-**Login/Registration**
+**Visit our live website**: [Industry Connect](https://industryconnect-react.onrender.com/)
 
-- **POST /api/register**: Create a new user (register).
-- **POST /api/login**: Authenticate an existing user (login).
+## Tech Stack
+* **Backend**: PostgreSQL, Express.js, Node.js
+* **Frontend**: React, Material UI with custom CSS
+* **Deployment**: Render
 
-**Homepage (Profile)**
+## Features
 
-- **POST /api/profile**: Create a new profile for the logged-in user.
-- **GET /api/profile/:userId**: Get a user's profile for viewing or editing
-- **PUT /api/profile/:userId**: Update a user's profile. Save Edit
+### Login and Authorization
+* **Auth0 API**: Enables user authentication. 
+* **Sign Up**: Users can utilize their Gmail accounts for a seamless sign-up process.
+* **Active Users Redirection**: Existing users will be swiftly redirected to our connection portal, kickstarting their networking journey.
 
-**Connect Page**
+### Connect Page
+* **Top Appbar**: Comprises navigational links, a uniquely designed logo, and a logout button.
+* **Sidebar**: Showcases the user's profile card complete with bio and statistics.
+* **Swiping Experience**: 
+  * A profile carousel introduces users for potential networking.
+  * Users can swipe left to skip or right to connect.
+  * Alternative options for connection include `ConnectButton` and `PassButton`.
+  * Continuous profile loading ensures uninterrupted networking.
+* **Industry Search Bar**: Tailor your networking with industry-specific searches.
+* **Connect and Pass History**: Keep track of your networking journey.
 
-- **GET /api/profiles/industry/:industryId**: Get a list of users in a selected industry.
-    - users points will determine the order of the carousel
-- **POST /api/connect**: Record a "connect". Match if two connects exist
-    - Logic happens here - if user you are recording a connect for also has connect for your user id, a match is made
-- **POST /api/pass**: Record a "pass".
-- **GET /api/matches/:userId**: Retrieve a list of matches for a user.
+### Chat Page
+* **Sidebar Match List**: See who you've connected with and jump into conversations.
+* **Profile Card**: View detailed information of your networking contact.
+* **Live Chatting**:
+  * **WebSockets**: Enables a real-time chat experience.
+  * **Chat History**: An organized view of all your past messages.
+  * **Interactive Chat UI**: Send messages using a user-friendly form.
+* **Rating System**: 
+  * Located in the sidebar, this allows users to rate their connections.
+  * Impactful as it adjusts the average rating seen on the rated user's profile.
 
-**Chat Page**
+### Profile Page
+* **AI-Driven Resume Builder**:
+  * Leverages OpenAI's GPT model to innovate resume creation.
+  * Users provide basic details, and the AI refines the content.
+* **Functional Breakdown**:
+  * **Prompt Creation**: Generates a professional objective and highlights core strengths.
+  * **Experience Processing**: Customizes bullet points detailing roles and achievements.
 
-- **GET /api/chats/:userId**: Retrieve a list of chats for a user.
-- **POST /api/chats**: Start a new chat. The request body would contain the IDs of the two users who are matched.
-- **POST /api/messages**: Send a message. The request body would contain the chat ID, the sender ID, and the message text.
-- **GET /api/messages/:chatId**: Retrieve the messages for a specific chat.
+### User Registration
+* A seamless process ensuring quick access to the networking platform.
+
+## Upcoming Features (Roadmap)
+* **Localisation**: Encouraging face-to-face interactions like coffee chats and workplace meetings.
+* **Video Chat Integration**: To support our remote-friendly ethos, we plan on integrating video chat.
