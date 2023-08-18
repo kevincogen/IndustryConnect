@@ -23,7 +23,7 @@ const Label = styled('label')({
 });
 
 const InputWrapper = styled('div')(({ theme }) => ({
-  width: 300,
+  width: "100%",
   border: `1px solid ${theme.palette.mode === 'dark' ? '#434343' : '#d9d9d9'}`,
   backgroundColor: theme.palette.mode === 'dark' ? '#141414' : '#fff',
   borderRadius: 4,
@@ -97,7 +97,7 @@ const StyledTag = styled(Tag)(({ theme }) => ({
 }));
 
 const Listbox = styled('ul')(({ theme }) => ({
-  width: 300,
+  width: "100%",
   margin: '2px 0 0',
   padding: 0,
   position: 'absolute',
