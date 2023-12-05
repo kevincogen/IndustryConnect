@@ -61,4 +61,5 @@ Welcome to Industry Connect! We've brought together the simplicity of a matching
 
 ## Upcoming Features (Roadmap)
 * **Localisation**: Encouraging face-to-face interactions like coffee chats and workplace meetings.
-* **Video Chat Integration**: To support our remote-friendly ethos, we plan on integrating video chat.
+* **Video Chat Integration**: To support our remote-friendly ethos, we plan on integrating video chat. 
+* **updates to database hosting**

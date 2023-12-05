@@ -55,7 +55,6 @@ const seedIndustriesTable = async () => {
     console.error('Error seeding industries table:', err);
   } finally {
     client.release();
-    db.end();
   }
 };
 

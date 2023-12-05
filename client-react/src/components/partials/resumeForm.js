@@ -68,7 +68,7 @@ setLoading(true);
         {result && Object.keys(result).length > 0  ? (
           <div className="resume-AI">
           <ResumeAI result={result} />
-          <button onClick={() => setResult({})}>Redo CV Build</button>
+          <button id="redo" onClick={() => setResult({})}>Redo CV Build</button>
           </div>
         ) : (
         <form

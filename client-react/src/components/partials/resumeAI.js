@@ -50,7 +50,6 @@ return (
                             dangerouslySetInnerHTML={{
                             __html: replaceWithBr(work.description),
                             }}
-                            className='resumeBodyContent'
                         />
                     </div>
                   ))}
